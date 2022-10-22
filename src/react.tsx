@@ -1,14 +1,14 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { writeFile } from "./back";
 
 const Index = () => {
-  return <div>Hello React!</div>;
+  return (
+    <div>
+      <p>Hello React!</p>
+      <button onClick={(e) => writeFile()}>asdasd</button>;
+    </div>
+  );
 };
-
-declare global {
-  interface Window {
-    electron: any,
-  }
-}
-
+//
 ReactDOM.render(<Index />, document.getElementById("app"));

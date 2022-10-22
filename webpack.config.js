@@ -5,6 +5,12 @@ module.exports = [
     mode: "development",
     entry: "./src/electron.ts",
     target: "electron-main",
+    resolve: {
+      extensions: ['.ts', '.js'],
+      fallback: {
+        fs: false
+      }
+    },
     module: {
       rules: [
         {
@@ -15,7 +21,7 @@ module.exports = [
       ],
     },
     output: {
-      path: __dirname + "/src",
+      path: __dirname + "/dist",
       filename: "electron.js",
     },
   },
@@ -24,6 +30,9 @@ module.exports = [
     entry: "./src/react.tsx",
     target: "electron-renderer",
     devtool: "source-map",
+    resolve: {
+      extensions: ['.ts', '.js'],
+    },
     module: {
       rules: [
         {
@@ -43,4 +52,5 @@ module.exports = [
       }),
     ],
   },
+  
 ];

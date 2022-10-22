@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "dist/react.js",
+  "type": "commonjs",
   "scripts": {
     "build": "webpack --config ./webpack.config.js",
     "start": "npm run build && electron ./dist/electron.js"
@@ -11,6 +12,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/node": "^18.11.3",
     "@types/react": "^18.0.21",
     "@types/react-dom": "^18.0.6",
     "electron": "^21.2.0",
