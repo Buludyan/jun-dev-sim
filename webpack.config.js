@@ -6,7 +6,7 @@ module.exports = [
     entry: "./src/electron.ts",
     target: "electron-main",
     resolve: {
-      extensions: ['.ts', '.js'],
+      extensions: ['.ts', '.js', '.tsx'],
       fallback: {
         fs: false
       }
@@ -27,11 +27,11 @@ module.exports = [
   },
   {
     mode: "development",
-    entry: "./src/react.tsx",
+    entry: "./src/app.tsx",
     target: "electron-renderer",
     devtool: "source-map",
     resolve: {
-      extensions: ['.ts', '.js'],
+      extensions: ['.ts', '.js', '.tsx'],
     },
     module: {
       rules: [
@@ -44,7 +44,7 @@ module.exports = [
     },
     output: {
       path: __dirname + "/dist",
-      filename: "react.js",
+      filename: "app.js",
     },
     plugins: [
       new HtmlWebpackPlugin({
