@@ -9,7 +9,6 @@ const Index = () => {
     </div>
   );
 };
-//
 
 const root = ReactDOM.createRoot(document.getElementById('app') as HTMLElement);
 
