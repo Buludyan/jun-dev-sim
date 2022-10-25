@@ -1,15 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import './app.scss';
+import {Header} from './front-end/components/header/Header';
 import {WorkProcess} from './front-end/pages/work-process/WorkProcess';
 
-const Index = () => {
+const App = () => {
   return (
-    <div style={{backgroundColor: 'black'}}>
-      <WorkProcess />
+    <div className="app">
+      <div className="app__inner">
+        <Header />
+        <WorkProcess />
+      </div>
     </div>
   );
 };
 
 const root = ReactDOM.createRoot(document.getElementById('app') as HTMLElement);
 
-root.render(<Index />);
+root.render(<App />);
