@@ -7,7 +7,7 @@
   "scripts": {
     "build": "webpack --config ./webpack.config.js",
     "start": "npm run build && electron ./dist/electron.js",
-    "electromon": "electromon --watch src --ext ts --exec \"npm run start\""
+    "nodemon": "nodemon --watch src --ext ts --ext tsx --exec \"npm run start\""
   },
   "keywords": [],
   "author": "",
