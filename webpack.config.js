@@ -1,56 +1,65 @@
-const HtmlWebpackPlugin = require("html-webpack-plugin");
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = [
   {
-    mode: "development",
-    entry: "./src/electron.ts",
-    target: "electron-main",
+    mode: 'development',
+    entry: './src/electron.ts',
+    target: 'electron-main',
     resolve: {
-      extensions: ['.ts', '.js', '.tsx'],
+      extensions: ['.ts', '.js', '.tsx', '.scss', '.css', '.sass'],
       fallback: {
-        fs: false
-      }
+        fs: false,
+      },
     },
     module: {
       rules: [
         {
           test: /\.ts$/,
           include: /src/,
-          use: [{ loader: "ts-loader" }],
+          use: [{loader: 'ts-loader'}],
+        },
+        {
+          test: /\.s[ac]ss$/i,
+          include: /src/,
+          use: ['style-loader', 'css-loader', 'sass-loader'],
         },
       ],
     },
     output: {
-      path: __dirname + "/dist",
-      filename: "electron.js",
+      path: __dirname + '/dist',
+      filename: 'electron.js',
     },
   },
   {
-    mode: "development",
-    entry: "./src/app.tsx",
-    target: "electron-renderer",
-    devtool: "source-map",
+    mode: 'development',
+    entry: './src/app.tsx',
+    target: 'electron-renderer',
+    devtool: 'source-map',
     resolve: {
-      extensions: ['.ts', '.js', '.tsx'],
+      extensions: ['.ts', '.js', '.tsx', '.scss', '.css', '.sass'],
     },
     module: {
       rules: [
         {
           test: /\.ts(x?)$/,
           include: /src/,
-          use: [{ loader: "ts-loader" }],
+          use: [{loader: 'ts-loader'}],
+        },
+        {
+          test: /\.s[ac]ss$/i,
+          include: /src/,
+          use: ['style-loader', 'css-loader', 'sass-loader'],
         },
       ],
     },
     output: {
-      path: __dirname + "/dist",
-      filename: "app.js",
+      path: __dirname + '/dist',
+      filename: 'app.js',
     },
     plugins: [
       new HtmlWebpackPlugin({
-        template: "./src/index.html",
+        template: './src/index.html',
       }),
     ],
   },
-  
 ];
