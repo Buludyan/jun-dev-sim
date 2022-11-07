@@ -1,4 +1,5 @@
-import {Problem} from './program';
+import {Function, functionGenerator} from './function';
+import {Problem} from './problem';
 import {
     requestGenerator,
     Request,
@@ -15,6 +16,9 @@ export const registrateAllComponents = () => {
     Request.register(requestToOsGenerator);
     Request.register(requestToWebGenerator);
 
+    /************************ FUNCTION **************************/
+    Function.register(requestGenerator);
+
     /************************ PROBLEM **************************/
-    Problem.register(requestGenerator);
+    Problem.register(functionGenerator);
 };

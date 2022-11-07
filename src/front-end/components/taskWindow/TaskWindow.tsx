@@ -4,7 +4,7 @@ import {randomProblem, initLanguage} from '../../../back-end/language/api';
 
 export const TaskWindow = () => {
     initLanguage();
-    const problem = randomProblem(3);
+    const problem = randomProblem(3000);
     return (
         <div className="taskWindow">
             <div className="taskWindow__inner">

@@ -1,4 +1,4 @@
-import {Problem} from './program';
+import {Problem} from './problem';
 import {registrateAllComponents} from './registrator';
 
 let initialized = false;

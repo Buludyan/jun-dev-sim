@@ -1,6 +1,6 @@
 import {randomIntFromInterval} from '../utils';
 import {Difficulty, IProblemPiece, PieceGenerator} from './interfaces';
-import {Problem} from './program';
+import {Problem} from './problem';
 
 class RequestToDb implements IProblemPiece {
     readonly description = (): string => {
@@ -86,7 +86,7 @@ export class Request implements IProblemPiece {
     }
 
     readonly description = (): string => {
-        return `request to ${this.requestTo.description()}\n`;
+        return `makes request to ${this.requestTo.description()}`;
     };
     readonly code = (): string => {
         return `request to ${this.requestTo.code()}\n`;
