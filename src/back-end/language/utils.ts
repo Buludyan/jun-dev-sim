@@ -1,27 +1,29 @@
 import {randomIntFromInterval} from '../utils';
 import {Difficulty} from './difficulty';
-import {IProblemPiece, PieceGenerator} from './interfaces';
+import {ILanguageContext, ILanguagePiece, IPieceGenerator} from './interfaces';
 
 export const generateStatementsTillDifficulty = (
-    allStatementGenerators: PieceGenerator[],
+    context: ILanguageContext,
+    allStatementGenerators: IPieceGenerator[],
     difficulty: number
-): IProblemPiece[] => {
-    const statements: IProblemPiece[] = [];
+): ILanguagePiece[] => {
+    const statements: ILanguagePiece[] = [];
     const allLength = allStatementGenerators.length;
     let numberOfRetries = 100;
     while (difficulty > 0 && numberOfRetries !== 0) {
         --numberOfRetries;
         const index = randomIntFromInterval(0, allLength - 1);
         const statementGenerator = allStatementGenerators[index];
-        console.log(statementGenerator);
-        if (statementGenerator.difficulty().canBeLess(difficulty)) {
+        if (statementGenerator.difficulty(context).canBeLess(difficulty)) {
             const difficultyOfThisStatement = statementGenerator
-                .difficulty()
+                .difficulty(context)
                 .randomDifficultyThatFits(difficulty);
             statements.push(
-                statementGenerator.generate(difficultyOfThisStatement)
+                statementGenerator.generate(context, difficultyOfThisStatement)
             );
             difficulty -= difficultyOfThisStatement;
+        } else {
+            console.log(difficulty, index, allStatementGenerators);
         }
     }
     if (numberOfRetries === 0) {
@@ -30,16 +32,19 @@ export const generateStatementsTillDifficulty = (
     return statements;
 };
 
-export const createGenerator = <ProblemPiece extends IProblemPiece>(
-    piece: {new (difficulty: number): ProblemPiece},
+export const createGenerator = <ProblemPiece extends ILanguagePiece>(
+    piece: {new (context: ILanguageContext, difficulty: number): ProblemPiece},
     difficulty: Difficulty
-): PieceGenerator => {
+): IPieceGenerator => {
     return {
-        difficulty: (): Difficulty => {
+        difficulty: (context: ILanguageContext): Difficulty => {
             return difficulty;
         },
-        generate: (difficulty: number): IProblemPiece => {
-            return new piece(difficulty);
+        generate: (
+            context: ILanguageContext,
+            difficulty: number
+        ): ILanguagePiece => {
+            return context.createPiece(piece, context, difficulty);
         },
     };
 };

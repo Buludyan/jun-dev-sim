@@ -1,17 +1,23 @@
 import {randomIntFromInterval} from '../../utils';
 import {Difficulty} from '../difficulty';
-import {IProblemPiece, PieceGenerator} from '../interfaces';
+import {ILanguageContext, ILanguagePiece, IPieceGenerator} from '../interfaces';
 import {Problem} from '../problem';
 import {createGenerator} from '../utils';
 
-class RequestToDb implements IProblemPiece {
-    readonly description = (): string => {
+class RequestToDb implements ILanguagePiece {
+    constructor(context: ILanguageContext, difficulty: number) {}
+    readonly description = (context: ILanguageContext): string => {
         return `db`;
     };
-    readonly code = (): string => {
+    readonly code = (context: ILanguageContext): string => {
         return `db`;
     };
-    readonly relatedVariableName = (): string | null => {
+    readonly assignToVariable = (context: ILanguageContext): boolean => {
+        return false;
+    };
+    readonly relatedVariableName = (
+        context: ILanguageContext
+    ): string | null => {
         return null;
     };
 }
@@ -21,14 +27,20 @@ export const requestToDbGenerator = createGenerator(
     new Difficulty(0, 0)
 );
 
-class RequestToOs implements IProblemPiece {
-    readonly description = (): string => {
+class RequestToOs implements ILanguagePiece {
+    constructor(context: ILanguageContext, difficulty: number) {}
+    readonly description = (context: ILanguageContext): string => {
         return `os`;
     };
-    readonly code = (): string => {
+    readonly code = (context: ILanguageContext): string => {
         return `os`;
     };
-    readonly relatedVariableName = (): string | null => {
+    readonly assignToVariable = (context: ILanguageContext): boolean => {
+        return false;
+    };
+    readonly relatedVariableName = (
+        context: ILanguageContext
+    ): string | null => {
         return null;
     };
 }
@@ -37,14 +49,21 @@ export const requestToOsGenerator = createGenerator(
     new Difficulty(0, 0)
 );
 
-class RequestToFs implements IProblemPiece {
-    readonly description = (): string => {
+class RequestToFs implements ILanguagePiece {
+    constructor(context: ILanguageContext, difficulty: number) {}
+    readonly description = (context: ILanguageContext): string => {
         return `fs`;
     };
-    readonly code = (): string => {
+    readonly code = (context: ILanguageContext): string => {
         return `fs`;
     };
-    readonly relatedVariableName = (): string | null => {
+
+    readonly assignToVariable = (context: ILanguageContext): boolean => {
+        return false;
+    };
+    readonly relatedVariableName = (
+        context: ILanguageContext
+    ): string | null => {
         return null;
     };
 }
@@ -53,14 +72,20 @@ export const requestToFsGenerator = createGenerator(
     new Difficulty(0, 0)
 );
 
-class RequestToWeb implements IProblemPiece {
-    readonly description = (): string => {
+class RequestToWeb implements ILanguagePiece {
+    constructor(context: ILanguageContext, difficulty: number) {}
+    readonly description = (context: ILanguageContext): string => {
         return `web`;
     };
-    readonly code = (): string => {
+    readonly code = (context: ILanguageContext): string => {
         return `web`;
     };
-    readonly relatedVariableName = (): string | null => {
+    readonly assignToVariable = (context: ILanguageContext): boolean => {
+        return false;
+    };
+    readonly relatedVariableName = (
+        context: ILanguageContext
+    ): string | null => {
         return null;
     };
 }
@@ -69,28 +94,36 @@ export const requestToWebGenerator = createGenerator(
     new Difficulty(0, 0)
 );
 
-export class Request implements IProblemPiece {
-    private static readonly allRequestsTo: PieceGenerator[] = [];
-    static readonly register = (requestTo: PieceGenerator) => {
+export class Request implements ILanguagePiece {
+    private static readonly allRequestsTo: IPieceGenerator[] = [];
+    static readonly register = (requestTo: IPieceGenerator) => {
         this.allRequestsTo.push(requestTo);
     };
 
-    private readonly requestTo: IProblemPiece;
-    constructor(difficulty: number) {
+    private readonly requestTo: ILanguagePiece;
+    constructor(context: ILanguageContext, difficulty: number) {
         const index = randomIntFromInterval(
             0,
             Request.allRequestsTo.length - 1
         );
-        this.requestTo = Request.allRequestsTo[index].generate(difficulty);
+        this.requestTo = Request.allRequestsTo[index].generate(
+            context,
+            difficulty
+        );
     }
 
-    readonly description = (): string => {
-        return `makes request to ${this.requestTo.description()}`;
+    readonly description = (context: ILanguageContext): string => {
+        return `makes request to ${this.requestTo.description(context)}`;
     };
-    readonly code = (): string => {
-        return `request to ${this.requestTo.code()}\n`;
+    readonly code = (context: ILanguageContext): string => {
+        return `request to ${this.requestTo.code(context)}\n`;
     };
-    readonly relatedVariableName = (): string | null => {
+    readonly assignToVariable = (context: ILanguageContext): boolean => {
+        throw new Error(`implement`);
+    };
+    readonly relatedVariableName = (
+        context: ILanguageContext
+    ): string | null => {
         return null;
     };
 }

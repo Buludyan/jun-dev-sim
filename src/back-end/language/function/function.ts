@@ -1,29 +1,35 @@
 import {randomIntFromInterval} from '../../utils';
 import {Difficulty} from '../difficulty';
-import {IProblemPiece, PieceGenerator} from '../interfaces';
-import {MRegistrate} from '../registrator';
+import {ILanguageContext, ILanguagePiece, IPieceGenerator} from '../interfaces';
+import {MRegistrate} from '../registerMixin';
 import {createGenerator, generateStatementsTillDifficulty} from '../utils';
 
-export class Function extends MRegistrate implements IProblemPiece {
-    private readonly statements: IProblemPiece[] = [];
-    constructor(difficulty: number) {
+export class Function extends MRegistrate implements ILanguagePiece {
+    private readonly statements: ILanguagePiece[] = [];
+    constructor(context: ILanguageContext, difficulty: number) {
         super();
         this.statements = generateStatementsTillDifficulty(
+            context,
             MRegistrate.allStatementGenerators,
             difficulty
         );
     }
 
-    readonly description = (): string => {
+    readonly description = (context: ILanguageContext): string => {
         return `a function that ${this.statements
-            .map(s => s.description())
+            .map(s => s.description(context))
             .join(', ')}`;
     };
-    readonly code = (): string => {
-        return `${this.statements.map(s => s.code()).join('')}\n`;
+    readonly code = (context: ILanguageContext): string => {
+        return `${this.statements.map(s => s.code(context)).join('')}\n`;
     };
-    readonly relatedVariableName = (): string | null => {
-        return null;
+    readonly assignToVariable = (context: ILanguageContext): boolean => {
+        throw new Error('Implement');
+    };
+    readonly relatedVariableName = (
+        context: ILanguageContext
+    ): string | null => {
+        throw new Error('Implement');
     };
 }
 
