@@ -11,8 +11,8 @@ export interface ILanguageContext {
 }
 
 export interface ILanguagePiece {
-    readonly description: (context: ILanguageContext) => string;
-    readonly code: (context: ILanguageContext) => string;
+    readonly description: () => string;
+    readonly code: () => string;
     readonly assignToVariable: (context: ILanguageContext) => boolean;
     readonly relatedVariableName: (context: ILanguageContext) => string | null;
     // TODO: add links
