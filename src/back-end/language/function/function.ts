@@ -1,7 +1,13 @@
 import {randomIntFromInterval} from '../../utils';
 import {Difficulty} from '../difficulty';
-import {ILanguageContext, ILanguagePiece, IPieceGenerator} from '../interfaces';
+import {
+    ILanguageContext,
+    ILanguagePiece,
+    ILanguagePieceName,
+    IPieceGenerator,
+} from '../interfaces';
 import {createGenerator, generateStatementsTillDifficulty} from '../utils';
+import {FunctionArgument} from './functionArgument';
 
 export class Function implements ILanguagePiece {
     private readonly guard: 'Function' = 'Function';
@@ -11,22 +17,41 @@ export class Function implements ILanguagePiece {
         this.allStatementGenerators.push(statement);
     };
 
+    private readonly functionName: ILanguagePieceName;
+    private readonly functionArguments: FunctionArgument[];
     private readonly statements: ILanguagePiece[] = [];
     constructor(context: ILanguageContext, difficulty: number) {
+        this.functionName = context.generateValidPieceName();
         this.statements = generateStatementsTillDifficulty(
             context,
             Function.allStatementGenerators,
             difficulty
         );
+        this.functionArguments = [
+            context.createPiece(FunctionArgument, difficulty),
+            context.createPiece(FunctionArgument, difficulty),
+        ];
     }
 
     readonly description = (): string => {
-        return `a function that ${this.statements
+        const argumentsString =
+            this.functionArguments.length === 0
+                ? ''
+                : ` and with argument${
+                      this.functionArguments.length === 1 ? '' : 's'
+                  } ${this.functionArguments
+                      .map(arg => arg.description())
+                      .join(', ')}`;
+        return `a function with name '${
+            this.functionName.name
+        }'${argumentsString} that ${this.statements
             .map(s => s.description())
             .join(', ')}`;
     };
     readonly code = (): string => {
-        return `${this.statements.map(s => s.code()).join('')}\n`;
+        return `function ${this.functionName.name} (${this.functionArguments
+            .map(arg => arg.code())
+            .join(', ')})\n${this.statements.map(s => s.code()).join('')}\n`;
     };
     readonly assignToVariable = (context: ILanguageContext): boolean => {
         throw new Error('Implement');

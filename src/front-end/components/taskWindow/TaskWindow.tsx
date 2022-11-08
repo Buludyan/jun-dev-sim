@@ -4,14 +4,17 @@ import {randomProblem, initLanguage} from '../../../back-end/language/api';
 
 export const TaskWindow = () => {
     initLanguage();
-    const problem = randomProblem(30);
+    const problem = randomProblem(50);
     return (
         <div className="taskWindow">
             <div className="taskWindow__inner">
                 <div className="taskWindow__console">
                     {/*<p>{JSON.stringify(problem)}</p>*/}
-                    {/* <p>{problem.description()}</p> */}
                     <p className="taskWindow__problem">
+                        {problem.description()}
+                    </p>
+                    <p className="taskWindow__problem">{problem.code()}</p>
+                    {/* <p className="taskWindow__problem">
                         Contrary to popular belief, Lorem Ipsum is not simply
                         random text. It has roots in a piece of classical Latin
                         literature from 45 BC, making it over 2000 years old.
@@ -35,7 +38,7 @@ export const TaskWindow = () => {
                         the string. A hard break (‐) will always break, even if
                         it is not necessary to do so. A soft break only breaks
                         if breaking is needed.
-                    </p>
+                    </p> */}
                 </div>
                 <div className="taskWindow__description"></div>
             </div>

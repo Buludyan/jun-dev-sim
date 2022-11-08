@@ -16,7 +16,7 @@ export const _randomProblem = (
     if (!initialized) {
         throw new Error(`Initialize language before use (call initLanguage)`);
     }
-    return context.createPiece(Problem, context, difficulty);
+    return context.createPiece(Problem, difficulty);
 };
 
 export const randomProblem = (difficulty: number) => {

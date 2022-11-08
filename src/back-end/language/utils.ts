@@ -44,7 +44,7 @@ export const createGenerator = <ProblemPiece extends ILanguagePiece>(
             context: ILanguageContext,
             difficulty: number
         ): ILanguagePiece => {
-            return context.createPiece(piece, context, difficulty);
+            return context.createPiece(piece, difficulty);
         },
     };
 };

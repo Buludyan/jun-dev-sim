@@ -1,13 +1,15 @@
 import {Difficulty} from './difficulty';
+import {primitiveTypes} from './primitiveTypes';
 
 export interface ILanguageContext {
     readonly createPiece: <ProblemPiece extends ILanguagePiece>(
         piece: {
             new (context: ILanguageContext, difficulty: number): ProblemPiece;
         },
-        context: ILanguageContext,
         difficulty: number
     ) => ProblemPiece;
+    readonly generateValidPieceName: () => ILanguagePieceName;
+    readonly generateValidPrimitiveType: () => PrimitiveTypesType;
 }
 
 export interface ILanguagePiece {
@@ -19,6 +21,10 @@ export interface ILanguagePiece {
     // TODO: add unlocks
 }
 
+export interface ILanguagePieceName {
+    readonly name: string;
+}
+
 export interface IPieceGenerator {
     readonly generate: (
         context: ILanguageContext,
@@ -28,3 +34,5 @@ export interface IPieceGenerator {
 }
 
 export interface IProblem {}
+
+export type PrimitiveTypesType = typeof primitiveTypes[number];
