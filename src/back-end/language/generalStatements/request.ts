@@ -1,6 +1,8 @@
-import {randomIntFromInterval} from '../utils';
-import {Difficulty, IProblemPiece, PieceGenerator} from './interfaces';
-import {Problem} from './problem';
+import {randomIntFromInterval} from '../../utils';
+import {Difficulty} from '../difficulty';
+import {IProblemPiece, PieceGenerator} from '../interfaces';
+import {Problem} from '../problem';
+import {createGenerator} from '../utils';
 
 class RequestToDb implements IProblemPiece {
     readonly description = (): string => {
@@ -9,15 +11,15 @@ class RequestToDb implements IProblemPiece {
     readonly code = (): string => {
         return `db`;
     };
+    readonly relatedVariableName = (): string | null => {
+        return null;
+    };
 }
-export const requestToDbGenerator: PieceGenerator = {
-    difficulty: (): Difficulty => {
-        return new Difficulty(0, 0);
-    },
-    generate: (difficulty: number): IProblemPiece => {
-        return new RequestToDb();
-    },
-};
+
+export const requestToDbGenerator = createGenerator(
+    RequestToDb,
+    new Difficulty(0, 0)
+);
 
 class RequestToOs implements IProblemPiece {
     readonly description = (): string => {
@@ -26,15 +28,14 @@ class RequestToOs implements IProblemPiece {
     readonly code = (): string => {
         return `os`;
     };
+    readonly relatedVariableName = (): string | null => {
+        return null;
+    };
 }
-export const requestToOsGenerator: PieceGenerator = {
-    difficulty: (): Difficulty => {
-        return new Difficulty(0, 0);
-    },
-    generate: (difficulty: number): IProblemPiece => {
-        return new RequestToOs();
-    },
-};
+export const requestToOsGenerator = createGenerator(
+    RequestToOs,
+    new Difficulty(0, 0)
+);
 
 class RequestToFs implements IProblemPiece {
     readonly description = (): string => {
@@ -43,15 +44,14 @@ class RequestToFs implements IProblemPiece {
     readonly code = (): string => {
         return `fs`;
     };
+    readonly relatedVariableName = (): string | null => {
+        return null;
+    };
 }
-export const requestToFsGenerator: PieceGenerator = {
-    difficulty: (): Difficulty => {
-        return new Difficulty(0, 0);
-    },
-    generate: (difficulty: number): IProblemPiece => {
-        return new RequestToFs();
-    },
-};
+export const requestToFsGenerator = createGenerator(
+    RequestToFs,
+    new Difficulty(0, 0)
+);
 
 class RequestToWeb implements IProblemPiece {
     readonly description = (): string => {
@@ -60,15 +60,14 @@ class RequestToWeb implements IProblemPiece {
     readonly code = (): string => {
         return `web`;
     };
+    readonly relatedVariableName = (): string | null => {
+        return null;
+    };
 }
-export const requestToWebGenerator: PieceGenerator = {
-    difficulty: (): Difficulty => {
-        return new Difficulty(0, 0);
-    },
-    generate: (difficulty: number): IProblemPiece => {
-        return new RequestToWeb();
-    },
-};
+export const requestToWebGenerator = createGenerator(
+    RequestToWeb,
+    new Difficulty(0, 0)
+);
 
 export class Request implements IProblemPiece {
     private static readonly allRequestsTo: PieceGenerator[] = [];
@@ -91,13 +90,9 @@ export class Request implements IProblemPiece {
     readonly code = (): string => {
         return `request to ${this.requestTo.code()}\n`;
     };
+    readonly relatedVariableName = (): string | null => {
+        return null;
+    };
 }
 
-export const requestGenerator: PieceGenerator = {
-    difficulty: (): Difficulty => {
-        return new Difficulty(1, 1);
-    },
-    generate: (difficulty: number): IProblemPiece => {
-        return new Request(difficulty);
-    },
-};
+export const requestGenerator = createGenerator(Request, new Difficulty(1, 1));

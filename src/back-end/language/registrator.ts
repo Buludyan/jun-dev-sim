@@ -1,4 +1,4 @@
-import {Function, functionGenerator} from './function';
+import {Function, functionGenerator} from './function/function';
 import {Problem} from './problem';
 import {
     requestGenerator,
@@ -7,7 +7,15 @@ import {
     requestToFsGenerator,
     requestToOsGenerator,
     requestToWebGenerator,
-} from './request';
+} from './generalStatements/request';
+import {PieceGenerator} from './interfaces';
+
+export class MRegistrate {
+    protected static readonly allStatementGenerators: PieceGenerator[] = [];
+    public static readonly register = (statement: PieceGenerator) => {
+        this.allStatementGenerators.push(statement);
+    };
+}
 
 export const registrateAllComponents = () => {
     /************************ REQUEST **************************/
