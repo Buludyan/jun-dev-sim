@@ -9,9 +9,8 @@ export const generateStatementsTillDifficulty = (
 ): ILanguagePiece[] => {
     const statements: ILanguagePiece[] = [];
     const allLength = allStatementGenerators.length;
-    let numberOfRetries = 100;
-    while (difficulty > 0 && numberOfRetries !== 0) {
-        --numberOfRetries;
+    let numberOfFailedRetries = 100;
+    while (difficulty > 0 && numberOfFailedRetries !== 0) {
         const index = randomIntFromInterval(0, allLength - 1);
         const statementGenerator = allStatementGenerators[index];
         if (statementGenerator.difficulty(context).canBeLess(difficulty)) {
@@ -23,10 +22,11 @@ export const generateStatementsTillDifficulty = (
             );
             difficulty -= difficultyOfThisStatement;
         } else {
+            --numberOfFailedRetries;
             console.log(difficulty, index, allStatementGenerators);
         }
     }
-    if (numberOfRetries === 0) {
+    if (numberOfFailedRetries === 0) {
         throw new Error(`Couldn't generate problem :(`);
     }
     return statements;

@@ -1,7 +1,7 @@
 import {ILanguageContext, ILanguagePiece} from './interfaces';
 
 export class LanguageContext implements ILanguageContext {
-    readonly allLanguagePieces: ILanguagePiece[] = [];
+    private readonly allLanguagePieces: ILanguagePiece[] = [];
 
     readonly createPiece = <ProblemPiece extends ILanguagePiece>(
         piece: {
@@ -11,7 +11,10 @@ export class LanguageContext implements ILanguageContext {
         difficulty: number
     ): ProblemPiece => {
         const problemPiece: ProblemPiece = new piece(context, difficulty);
-        this.allLanguagePieces.push(problemPiece);
+        console.log(`AAAAAAAAAAAAAAAA = ${JSON.stringify(problemPiece)}`);
+        this.allLanguagePieces.unshift(problemPiece);
         return problemPiece;
     };
+
+    readonly getAllPieces = () => this.allLanguagePieces;
 }

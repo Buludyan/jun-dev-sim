@@ -5,11 +5,12 @@ import {Problem} from '../problem';
 import {createGenerator} from '../utils';
 
 class RequestToDb implements ILanguagePiece {
+    private readonly guard: 'RequestToDb' = 'RequestToDb';
     constructor(context: ILanguageContext, difficulty: number) {}
-    readonly description = (context: ILanguageContext): string => {
+    readonly description = (): string => {
         return `db`;
     };
-    readonly code = (context: ILanguageContext): string => {
+    readonly code = (): string => {
         return `db`;
     };
     readonly assignToVariable = (context: ILanguageContext): boolean => {
@@ -28,11 +29,12 @@ export const requestToDbGenerator = createGenerator(
 );
 
 class RequestToOs implements ILanguagePiece {
+    private readonly guard: 'RequestToOs' = 'RequestToOs';
     constructor(context: ILanguageContext, difficulty: number) {}
-    readonly description = (context: ILanguageContext): string => {
+    readonly description = (): string => {
         return `os`;
     };
-    readonly code = (context: ILanguageContext): string => {
+    readonly code = (): string => {
         return `os`;
     };
     readonly assignToVariable = (context: ILanguageContext): boolean => {
@@ -50,11 +52,12 @@ export const requestToOsGenerator = createGenerator(
 );
 
 class RequestToFs implements ILanguagePiece {
+    private readonly guard: 'RequestToFs' = 'RequestToFs';
     constructor(context: ILanguageContext, difficulty: number) {}
-    readonly description = (context: ILanguageContext): string => {
+    readonly description = (): string => {
         return `fs`;
     };
-    readonly code = (context: ILanguageContext): string => {
+    readonly code = (): string => {
         return `fs`;
     };
 
@@ -73,11 +76,12 @@ export const requestToFsGenerator = createGenerator(
 );
 
 class RequestToWeb implements ILanguagePiece {
+    private readonly guard: 'RequestToWeb' = 'RequestToWeb';
     constructor(context: ILanguageContext, difficulty: number) {}
-    readonly description = (context: ILanguageContext): string => {
+    readonly description = (): string => {
         return `web`;
     };
-    readonly code = (context: ILanguageContext): string => {
+    readonly code = (): string => {
         return `web`;
     };
     readonly assignToVariable = (context: ILanguageContext): boolean => {
@@ -95,28 +99,30 @@ export const requestToWebGenerator = createGenerator(
 );
 
 export class Request implements ILanguagePiece {
-    private static readonly allRequestsTo: IPieceGenerator[] = [];
-    static readonly register = (requestTo: IPieceGenerator) => {
-        this.allRequestsTo.push(requestTo);
+    private readonly guard: 'Request' = 'Request';
+
+    protected static readonly allStatementGenerators: IPieceGenerator[] = [];
+    public static readonly register = (statement: IPieceGenerator) => {
+        this.allStatementGenerators.push(statement);
     };
 
     private readonly requestTo: ILanguagePiece;
     constructor(context: ILanguageContext, difficulty: number) {
         const index = randomIntFromInterval(
             0,
-            Request.allRequestsTo.length - 1
+            Request.allStatementGenerators.length - 1
         );
-        this.requestTo = Request.allRequestsTo[index].generate(
+        this.requestTo = Request.allStatementGenerators[index].generate(
             context,
             difficulty
         );
     }
 
-    readonly description = (context: ILanguageContext): string => {
-        return `makes request to ${this.requestTo.description(context)}`;
+    readonly description = (): string => {
+        return `makes request to ${this.requestTo.description()}`;
     };
-    readonly code = (context: ILanguageContext): string => {
-        return `request to ${this.requestTo.code(context)}\n`;
+    readonly code = (): string => {
+        return `request to ${this.requestTo.code()}\n`;
     };
     readonly assignToVariable = (context: ILanguageContext): boolean => {
         throw new Error(`implement`);
