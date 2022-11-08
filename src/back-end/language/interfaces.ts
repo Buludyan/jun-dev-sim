@@ -12,11 +12,18 @@ export interface ILanguageContext {
     readonly generateValidPrimitiveType: () => PrimitiveTypesType;
 }
 
+export interface ILanguageVariable {
+    readonly description: () => string;
+    readonly code: () => string;
+}
+
 export interface ILanguagePiece {
     readonly description: () => string;
     readonly code: () => string;
     readonly assignToVariable: (context: ILanguageContext) => boolean;
-    readonly relatedVariableName: (context: ILanguageContext) => string | null;
+    readonly relatedVariableName: (
+        context: ILanguageContext
+    ) => ILanguageVariable | null;
     // TODO: add links
     // TODO: add unlocks
 }

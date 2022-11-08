@@ -23,7 +23,30 @@ export const generateStatementsTillDifficulty = (
             difficulty -= difficultyOfThisStatement;
         } else {
             --numberOfFailedRetries;
-            console.log(difficulty, index, allStatementGenerators);
+        }
+    }
+    if (numberOfFailedRetries === 0) {
+        throw new Error(`Couldn't generate problem :(`);
+    }
+    return statements;
+};
+
+export const generateOneStatementsOfDifficulty = (
+    context: ILanguageContext,
+    allStatementGenerators: IPieceGenerator[],
+    difficulty: number
+): ILanguagePiece[] => {
+    const statements: ILanguagePiece[] = [];
+    const allLength = allStatementGenerators.length;
+    let numberOfFailedRetries = 100;
+    while (numberOfFailedRetries !== 0) {
+        const index = randomIntFromInterval(0, allLength - 1);
+        const statementGenerator = allStatementGenerators[index];
+        if (statementGenerator.difficulty(context).contain(difficulty)) {
+            statements.push(statementGenerator.generate(context, difficulty));
+            break;
+        } else {
+            --numberOfFailedRetries;
         }
     }
     if (numberOfFailedRetries === 0) {

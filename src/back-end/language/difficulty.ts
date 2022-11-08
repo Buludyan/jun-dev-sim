@@ -1,8 +1,8 @@
 import {randomIntFromInterval} from '../utils';
 
 export class Difficulty {
-    readonly minDifficulty: number;
-    readonly maxDifficulty: number;
+    private readonly minDifficulty: number;
+    private readonly maxDifficulty: number;
     constructor(minDifficulty: number, maxDifficulty: number) {
         this.minDifficulty = minDifficulty;
         this.maxDifficulty = maxDifficulty;

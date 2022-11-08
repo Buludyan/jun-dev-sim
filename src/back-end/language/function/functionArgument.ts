@@ -2,6 +2,7 @@ import {
     ILanguageContext,
     ILanguagePiece,
     ILanguagePieceName,
+    ILanguageVariable,
     PrimitiveTypesType,
 } from '../interfaces';
 
@@ -23,7 +24,7 @@ export class FunctionArgument implements ILanguagePiece {
     };
     readonly relatedVariableName = (
         context: ILanguageContext
-    ): string | null => {
+    ): ILanguageVariable | null => {
         return null;
     };
 }

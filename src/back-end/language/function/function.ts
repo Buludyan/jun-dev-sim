@@ -4,8 +4,10 @@ import {
     ILanguageContext,
     ILanguagePiece,
     ILanguagePieceName,
+    ILanguageVariable,
     IPieceGenerator,
 } from '../interfaces';
+import {LanguageVariable} from '../languageVariable';
 import {createGenerator, generateStatementsTillDifficulty} from '../utils';
 import {FunctionArgument} from './functionArgument';
 
@@ -58,7 +60,7 @@ export class Function implements ILanguagePiece {
     };
     readonly relatedVariableName = (
         context: ILanguageContext
-    ): string | null => {
+    ): ILanguageVariable | null => {
         throw new Error('Implement');
     };
 }

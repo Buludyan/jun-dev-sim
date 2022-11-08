@@ -1,6 +1,15 @@
 import {IGuard, randomIntFromInterval} from '../utils';
-import {ILanguageContext, ILanguagePiece, IPieceGenerator} from './interfaces';
-import {generateStatementsTillDifficulty} from './utils';
+import {
+    ILanguageContext,
+    ILanguagePiece,
+    ILanguageVariable,
+    IPieceGenerator,
+} from './interfaces';
+import {LanguageContext} from './languageContext';
+import {
+    generateOneStatementsOfDifficulty,
+    generateStatementsTillDifficulty,
+} from './utils';
 
 export class Problem implements ILanguagePiece {
     private readonly guard: 'Problem' = 'Problem';
@@ -11,7 +20,7 @@ export class Problem implements ILanguagePiece {
 
     private readonly statements: ILanguagePiece[] = [];
     constructor(context: ILanguageContext, difficulty: number) {
-        this.statements = generateStatementsTillDifficulty(
+        this.statements = generateOneStatementsOfDifficulty(
             context,
             Problem.allStatementGenerators,
             difficulty
@@ -31,7 +40,7 @@ export class Problem implements ILanguagePiece {
     };
     readonly relatedVariableName = (
         context: ILanguageContext
-    ): string | null => {
+    ): ILanguageVariable | null => {
         return null;
     };
 }

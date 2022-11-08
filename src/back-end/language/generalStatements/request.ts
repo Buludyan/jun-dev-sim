@@ -1,8 +1,15 @@
 import {randomIntFromInterval} from '../../utils';
 import {Difficulty} from '../difficulty';
-import {ILanguageContext, ILanguagePiece, IPieceGenerator} from '../interfaces';
+import {
+    ILanguageContext,
+    ILanguagePiece,
+    ILanguagePieceName,
+    ILanguageVariable,
+    IPieceGenerator,
+} from '../interfaces';
 import {Problem} from '../problem';
 import {createGenerator} from '../utils';
+import {LanguageVariable} from '../languageVariable';
 
 class RequestToDb implements ILanguagePiece {
     private readonly guard: 'RequestToDb' = 'RequestToDb';
@@ -18,7 +25,7 @@ class RequestToDb implements ILanguagePiece {
     };
     readonly relatedVariableName = (
         context: ILanguageContext
-    ): string | null => {
+    ): ILanguageVariable | null => {
         return null;
     };
 }
@@ -42,7 +49,7 @@ class RequestToOs implements ILanguagePiece {
     };
     readonly relatedVariableName = (
         context: ILanguageContext
-    ): string | null => {
+    ): ILanguageVariable | null => {
         return null;
     };
 }
@@ -66,7 +73,7 @@ class RequestToFs implements ILanguagePiece {
     };
     readonly relatedVariableName = (
         context: ILanguageContext
-    ): string | null => {
+    ): ILanguageVariable | null => {
         return null;
     };
 }
@@ -89,7 +96,7 @@ class RequestToWeb implements ILanguagePiece {
     };
     readonly relatedVariableName = (
         context: ILanguageContext
-    ): string | null => {
+    ): ILanguageVariable | null => {
         return null;
     };
 }
@@ -106,6 +113,7 @@ export class Request implements ILanguagePiece {
         this.allStatementGenerators.push(statement);
     };
 
+    assignToVariableName: ILanguageVariable | null = null;
     private readonly requestTo: ILanguagePiece;
     constructor(context: ILanguageContext, difficulty: number) {
         const index = randomIntFromInterval(
@@ -125,12 +133,13 @@ export class Request implements ILanguagePiece {
         return `request to ${this.requestTo.code()}\n`;
     };
     readonly assignToVariable = (context: ILanguageContext): boolean => {
-        throw new Error(`implement`);
+        this.assignToVariableName = new LanguageVariable(context);
+        return true;
     };
     readonly relatedVariableName = (
         context: ILanguageContext
-    ): string | null => {
-        return null;
+    ): ILanguageVariable | null => {
+        return this.assignToVariableName;
     };
 }
 
