@@ -1,13 +1,9 @@
 .charWindow {
-  height: 100%;
-  width: 50vw;
-
-  &__inner {
     height: 100%;
-    width: 100%;
-    background-image: url('../../assets/charachter_work.jpg');
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-  }
+    width: 50vw;
+
+    &__inner {
+        height: 100vh;
+        width: 100%;
+    }
 }
