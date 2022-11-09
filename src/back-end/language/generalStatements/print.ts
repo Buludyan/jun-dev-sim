@@ -44,7 +44,7 @@ export namespace PrintNamespace {
         };
 
         readonly description = (): string => {
-            return `print object ${this.printVariable.getName().name}`;
+            return `prints object '${this.printVariable.getName().name}'`;
         };
         readonly code = (): string => {
             return `print ${this.printVariable.getName().name}\n`;
