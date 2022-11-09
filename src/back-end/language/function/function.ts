@@ -33,15 +33,15 @@ export namespace FunctionNamespace {
         private readonly statements: ILanguagePiece[] = [];
         constructor(context: ILanguageContext, private difficulty: number) {
             this.functionName = context.generateValidPieceName();
+            this.functionArguments = [
+                context.createPiece(FunctionArgument, difficulty),
+                context.createPiece(FunctionArgument, difficulty),
+            ];
             this.statements = generateStatementsTillDifficulty(
                 context,
                 Function.allStatementGenerators,
                 difficulty
             );
-            this.functionArguments = [
-                context.createPiece(FunctionArgument, difficulty),
-                context.createPiece(FunctionArgument, difficulty),
-            ];
         }
         readonly currentDifficulty = (): number => {
             return this.difficulty;

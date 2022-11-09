@@ -16,7 +16,7 @@ export namespace LanguageVariableNamespace {
             this.type = context.generateValidPrimitiveType();
         }
         readonly description = (): string => {
-            return `and assign it to variable '${this.name.name}' of type ${this.type}`;
+            return `and assigns it to variable '${this.name.name}' of type ${this.type}`;
         };
         readonly code = (): string => {
             return `var ${this.name.name}:${this.type} =`;

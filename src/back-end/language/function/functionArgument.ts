@@ -31,5 +31,8 @@ export namespace FunctionArgumentNamespace {
         ): ILanguageVariable | null => {
             return null;
         };
+        readonly getVariableName = (): ILanguagePieceName => {
+            return this.name;
+        };
     }
 }
