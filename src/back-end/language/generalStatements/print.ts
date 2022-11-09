@@ -42,11 +42,6 @@ export namespace PrintNamespace {
         readonly assignToVariable = (context: ILanguageContext): boolean => {
             return false;
         };
-        readonly relatedVariableName = (
-            context: ILanguageContext
-        ): ILanguageVariable | null => {
-            return null;
-        };
     }
 
     export const printGenerator = createGenerator(

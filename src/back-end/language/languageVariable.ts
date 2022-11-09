@@ -14,6 +14,7 @@ export namespace LanguageVariableNamespace {
         constructor(context: ILanguageContext) {
             this.name = context.generateValidPieceName();
             this.type = context.generateValidPrimitiveType();
+            context.registerValidVariablesToUse(this);
         }
         readonly description = (): string => {
             return `and assigns it to variable '${this.name.name}' of type ${this.type}`;

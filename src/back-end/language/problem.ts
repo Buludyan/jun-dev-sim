@@ -45,10 +45,5 @@ export namespace ProblemNamespace {
         readonly assignToVariable = (context: ILanguageContext): boolean => {
             throw new Error(`implement`);
         };
-        readonly relatedVariableName = (
-            context: ILanguageContext
-        ): ILanguageVariable | null => {
-            return null;
-        };
     }
 }

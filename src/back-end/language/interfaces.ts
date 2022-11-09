@@ -17,6 +17,9 @@ export namespace InterfacesNamespace {
         ) => ProblemPiece;
         readonly generateValidPieceName: () => ILanguagePieceName;
         readonly generateValidPrimitiveType: () => PrimitiveTypesType;
+        readonly registerValidVariablesToUse: (
+            variables: ILanguageVariable
+        ) => void;
         readonly getValidUsedVariable: () => ILanguageVariable | null;
         readonly validUsedVariableExists: () => boolean;
     }
@@ -30,9 +33,6 @@ export namespace InterfacesNamespace {
         readonly description: () => string;
         readonly code: () => string;
         readonly assignToVariable: (context: ILanguageContext) => boolean;
-        readonly relatedVariableName: (
-            context: ILanguageContext
-        ) => ILanguageVariable | null;
         // TODO: add links
         // TODO: add unlocks
     }

@@ -34,6 +34,7 @@ export namespace FunctionNamespace {
         constructor(context: ILanguageContext, private difficulty: number) {
             this.functionName = context.generateValidPieceName();
             this.functionArguments = [
+                // TODO: make this variadic
                 context.createPiece(FunctionArgument, difficulty),
                 context.createPiece(FunctionArgument, difficulty),
             ];
@@ -70,12 +71,7 @@ export namespace FunctionNamespace {
                 .join('')}\n`;
         };
         readonly assignToVariable = (context: ILanguageContext): boolean => {
-            throw new Error('Implement');
-        };
-        readonly relatedVariableName = (
-            context: ILanguageContext
-        ): ILanguageVariable | null => {
-            throw new Error('Implement');
+            return false;
         };
     }
 

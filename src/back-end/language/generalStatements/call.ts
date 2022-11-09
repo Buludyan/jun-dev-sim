@@ -25,6 +25,7 @@ export namespace CallNamespace {
 
         private readonly callVariable: ILanguagePieceName;
         private readonly functionArguments: ILanguageVariable[];
+        assignToVariableName: ILanguageVariable | null = null;
 
         constructor(context: ILanguageContext, private difficulty: number) {
             const variable = context.generateValidPieceName();
@@ -51,23 +52,30 @@ export namespace CallNamespace {
                       } ${this.functionArguments
                           .map(arg => `'${arg.getName().name}'`)
                           .join(', ')}`;
-
-            return `calls function '${this.callVariable.name}' ${argumentsString}`;
+            const assignString = `${
+                this.assignToVariableName
+                    ? ` ${this.assignToVariableName.description()}`
+                    : ''
+            }`;
+            return `calls function '${this.callVariable.name}' ${argumentsString}${assignString}`;
         };
         readonly code = (): string => {
             const argumentsString = this.functionArguments
                 .map(arg => `${arg.getName().name}`)
                 .join(', ');
+            const assignString = `${
+                this.assignToVariableName
+                    ? `${this.assignToVariableName.code()} `
+                    : ''
+            }`;
+            return `${assignString}${this.callVariable.name}(${argumentsString})\n`;
+        };
 
-            return `${this.callVariable.name}(${argumentsString})\n`;
-        };
         readonly assignToVariable = (context: ILanguageContext): boolean => {
-            return false;
-        };
-        readonly relatedVariableName = (
-            context: ILanguageContext
-        ): ILanguageVariable | null => {
-            return null;
+            if (this.assignToVariableName === null) {
+                this.assignToVariableName = new LanguageVariable(context);
+            }
+            return true;
         };
     }
 

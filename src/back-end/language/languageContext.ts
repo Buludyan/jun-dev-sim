@@ -49,44 +49,60 @@ export namespace LanguageContextNamespace {
             ];
         };
 
-        readonly getValidUsedVariable = (): ILanguageVariable | null => {
-            let randomIndexOfAllPieces = randomIntFromInterval(
-                0,
-                this.allLanguagePieces.length - 1
-            );
-            if (this.allLanguagePieces.length === 0) {
-                return null;
-            }
-            console.log(`randomIndexOfAllPieces = ${randomIndexOfAllPieces}, `);
-            let numberOfRetries = 100;
-            while (
-                this.allLanguagePieces[
-                    randomIndexOfAllPieces
-                ].relatedVariableName(this) === null &&
-                numberOfRetries !== 0
-            ) {
-                console.log(
-                    `randomIndexOfAllPieces = ${randomIndexOfAllPieces}`
-                );
+        private readonly allValidVariablesToUse: ILanguageVariable[] = [];
+        readonly registerValidVariablesToUse = (
+            variables: ILanguageVariable
+        ): void => {
+            this.allValidVariablesToUse.push(variables);
+        };
 
-                if (
-                    this.allLanguagePieces[
-                        randomIndexOfAllPieces
-                    ].assignToVariable(this)
-                ) {
-                    break;
+        readonly getValidUsedVariable = (): ILanguageVariable | null => {
+            const allVariablesLength = this.allValidVariablesToUse.length;
+
+            let randomNumber = randomIntFromInterval(0, 1);
+            let randomIndexOfAllVariables = -1;
+            if (randomNumber === 0) {
+                if (allVariablesLength === 0) {
+                    return null;
                 }
-                numberOfRetries--;
-                randomIndexOfAllPieces = randomIntFromInterval(
+                randomIndexOfAllVariables = randomIntFromInterval(
                     0,
-                    this.allLanguagePieces.length - 1
+                    allVariablesLength - 1
                 );
+            } else {
+                const allPiecesLength = this.allLanguagePieces.length;
+                let randomIndexOfAllPieces = randomIntFromInterval(
+                    0,
+                    allPiecesLength - 1
+                );
+                let numberOfRetries = 100;
+                while (
+                    !this.allLanguagePieces[
+                        randomIndexOfAllPieces
+                    ].assignToVariable(this) &&
+                    numberOfRetries !== 0
+                ) {
+                    numberOfRetries--;
+                    randomIndexOfAllPieces = randomIntFromInterval(
+                        0,
+                        this.allLanguagePieces.length - 1
+                    );
+                }
+                if (numberOfRetries === 0) {
+                    if (allVariablesLength === 0) {
+                        return null;
+                    }
+                    randomIndexOfAllVariables = randomIntFromInterval(
+                        0,
+                        allVariablesLength - 1
+                    );
+                } else {
+                    randomIndexOfAllVariables =
+                        this.allValidVariablesToUse.length - 1;
+                }
             }
-            const relatedVariableName =
-                this.allLanguagePieces[
-                    randomIndexOfAllPieces
-                ].relatedVariableName(this);
-            return relatedVariableName;
+
+            return this.allValidVariablesToUse[randomIndexOfAllVariables];
         };
 
         readonly validUsedVariableExists = (): boolean => {

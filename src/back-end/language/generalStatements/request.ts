@@ -31,11 +31,6 @@ export namespace RequestNamespace {
         readonly assignToVariable = (context: ILanguageContext): boolean => {
             return false;
         };
-        readonly relatedVariableName = (
-            context: ILanguageContext
-        ): ILanguageVariable | null => {
-            return null;
-        };
     }
 
     export const requestToDbGenerator = createGenerator(
@@ -58,11 +53,6 @@ export namespace RequestNamespace {
         };
         readonly assignToVariable = (context: ILanguageContext): boolean => {
             return false;
-        };
-        readonly relatedVariableName = (
-            context: ILanguageContext
-        ): ILanguageVariable | null => {
-            return null;
         };
     }
     export const requestToOsGenerator = createGenerator(
@@ -87,11 +77,6 @@ export namespace RequestNamespace {
         readonly assignToVariable = (context: ILanguageContext): boolean => {
             return false;
         };
-        readonly relatedVariableName = (
-            context: ILanguageContext
-        ): ILanguageVariable | null => {
-            return null;
-        };
     }
     export const requestToFsGenerator = createGenerator(
         RequestToFs,
@@ -113,11 +98,6 @@ export namespace RequestNamespace {
         };
         readonly assignToVariable = (context: ILanguageContext): boolean => {
             return false;
-        };
-        readonly relatedVariableName = (
-            context: ILanguageContext
-        ): ILanguageVariable | null => {
-            return null;
         };
     }
     export const requestToWebGenerator = createGenerator(
@@ -168,13 +148,10 @@ export namespace RequestNamespace {
             return `${assignString}request to ${this.requestTo.code()}\n`;
         };
         readonly assignToVariable = (context: ILanguageContext): boolean => {
-            this.assignToVariableName = new LanguageVariable(context);
+            if (this.assignToVariableName === null) {
+                this.assignToVariableName = new LanguageVariable(context);
+            }
             return true;
-        };
-        readonly relatedVariableName = (
-            context: ILanguageContext
-        ): ILanguageVariable | null => {
-            return this.assignToVariableName;
         };
     }
 
