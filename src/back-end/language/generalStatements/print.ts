@@ -44,13 +44,9 @@ export namespace PrintNamespace {
         };
     }
 
-    export const printGenerator = createGenerator(
-        Print,
-        new Difficulty(1, 1),
-        (context: ILanguageContext): boolean => {
-            return context.validUsedVariableExists();
-        }
-    );
+    export const printGenerator = createGenerator(Print, new Difficulty(1, 1), (context: ILanguageContext): boolean => {
+        return context.validUsedVariableExists();
+    });
 
     Function.register(printGenerator);
 }

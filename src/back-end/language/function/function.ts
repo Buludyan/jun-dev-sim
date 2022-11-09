@@ -22,8 +22,7 @@ export namespace FunctionNamespace {
     export class Function implements ILanguagePiece {
         private readonly guard: 'Function' = 'Function';
         // TODO: move from here
-        protected static readonly allStatementGenerators: IPieceGenerator[] =
-            [];
+        protected static readonly allStatementGenerators: IPieceGenerator[] = [];
         public static readonly register = (statement: IPieceGenerator) => {
             this.allStatementGenerators.push(statement);
         };
@@ -38,11 +37,7 @@ export namespace FunctionNamespace {
                 context.createPiece(FunctionArgument, difficulty),
                 context.createPiece(FunctionArgument, difficulty),
             ];
-            this.statements = generateStatementsTillDifficulty(
-                context,
-                Function.allStatementGenerators,
-                difficulty
-            );
+            this.statements = generateStatementsTillDifficulty(context, Function.allStatementGenerators, difficulty);
         }
         readonly currentDifficulty = (): number => {
             return this.difficulty;
@@ -52,33 +47,23 @@ export namespace FunctionNamespace {
             const argumentsString =
                 this.functionArguments.length === 0
                     ? ''
-                    : ` and with argument${
-                          this.functionArguments.length === 1 ? '' : 's'
-                      } ${this.functionArguments
+                    : ` and with argument${this.functionArguments.length === 1 ? '' : 's'} ${this.functionArguments
                           .map(arg => arg.description())
                           .join(', ')}`;
-            return `a function with name '${
-                this.functionName.name
-            }'${argumentsString} that ${this.statements
+            return `a function with name '${this.functionName.name}'${argumentsString} that ${this.statements
                 .map(s => s.description())
                 .join(', ')}`;
         };
         readonly code = (): string => {
             return `function ${this.functionName.name} (${this.functionArguments
                 .map(arg => arg.code())
-                .join(', ')})\n${this.statements
-                .map(s => s.code())
-                .join('')}\n`;
+                .join(', ')})\n${this.statements.map(s => s.code()).join('')}\n`;
         };
         readonly assignToVariable = (context: ILanguageContext): boolean => {
             return false;
         };
     }
 
-    export const functionGenerator = createGenerator(
-        Function,
-        new Difficulty(1, 10),
-        null
-    );
+    export const functionGenerator = createGenerator(Function, new Difficulty(1, 10), null);
     ProblemNamespace.Problem.register(functionGenerator);
 }

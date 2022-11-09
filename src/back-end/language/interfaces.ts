@@ -8,18 +8,13 @@ export namespace InterfacesNamespace {
     export interface ILanguageContext {
         readonly createPiece: <ProblemPiece extends ILanguagePiece>(
             piece: {
-                new (
-                    context: ILanguageContext,
-                    difficulty: number
-                ): ProblemPiece;
+                new (context: ILanguageContext, difficulty: number): ProblemPiece;
             },
             difficulty: number
         ) => ProblemPiece;
         readonly generateValidPieceName: () => ILanguagePieceName;
         readonly generateValidPrimitiveType: () => PrimitiveTypesType;
-        readonly registerValidVariablesToUse: (
-            variables: ILanguageVariable
-        ) => void;
+        readonly registerValidVariablesToUse: (variables: ILanguageVariable) => void;
         readonly getValidUsedVariable: () => ILanguageVariable | null;
         readonly validUsedVariableExists: () => boolean;
     }
@@ -32,28 +27,15 @@ export namespace InterfacesNamespace {
         readonly currentDifficulty: () => number;
         readonly description: () => string;
         readonly code: () => string;
-        readonly assignToVariable: (context: ILanguageContext) => boolean;
         // TODO: add links
         // TODO: add unlocks
     }
 
     export interface IPieceGenerator {
-        readonly canGenerate: (
-            context: ILanguageContext,
-            difficulty: number
-        ) => boolean;
-        readonly canGenerateOnlyOne: (
-            context: ILanguageContext,
-            difficulty: number
-        ) => boolean;
-        readonly generate: (
-            context: ILanguageContext,
-            difficulty: number
-        ) => ILanguagePiece;
-        readonly generateWithRandomDifficulty: (
-            context: ILanguageContext,
-            difficulty: number
-        ) => ILanguagePiece;
+        readonly canGenerate: (context: ILanguageContext, difficulty: number) => boolean;
+        readonly canGenerateOnlyOne: (context: ILanguageContext, difficulty: number) => boolean;
+        readonly generate: (context: ILanguageContext, difficulty: number) => ILanguagePiece;
+        readonly generateWithRandomDifficulty: (context: ILanguageContext, difficulty: number) => ILanguagePiece;
         // readonly difficulty: (context: ILanguageContext) => Difficulty;
     }
 

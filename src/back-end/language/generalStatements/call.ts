@@ -7,7 +7,9 @@ import {UtilsNamespace} from '../utils';
 import {LanguageVariableNamespace} from '../languageVariable';
 import {FunctionNamespace} from '../function/function';
 import {FunctionArgumentNamespace} from '../function/functionArgument';
+import {AssignableNamespace} from '../assignable';
 
+import Assignable = AssignableNamespace.Assignable;
 import ILanguageContext = InterfacesNamespace.ILanguageContext;
 import ILanguagePiece = InterfacesNamespace.ILanguagePiece;
 import ILanguagePieceName = InterfacesNamespace.ILanguagePieceName;
@@ -20,14 +22,14 @@ import Function = FunctionNamespace.Function;
 import FunctionArgument = FunctionArgumentNamespace.FunctionArgument;
 
 export namespace CallNamespace {
-    export class Call implements ILanguagePiece {
+    export class Call extends Assignable implements ILanguagePiece {
         private readonly guard: 'Call' = 'Call';
 
         private readonly callVariable: ILanguagePieceName;
         private readonly functionArguments: ILanguageVariable[];
-        assignToVariableName: ILanguageVariable | null = null;
 
         constructor(context: ILanguageContext, private difficulty: number) {
+            super();
             const variable = context.generateValidPieceName();
             if (variable === null) {
                 throw new Error(`Cannot create call statement`);
@@ -47,45 +49,21 @@ export namespace CallNamespace {
             const argumentsString =
                 this.functionArguments.length === 0
                     ? 'without arguments'
-                    : `with argument${
-                          this.functionArguments.length === 1 ? '' : 's'
-                      } ${this.functionArguments
+                    : `with argument${this.functionArguments.length === 1 ? '' : 's'} ${this.functionArguments
                           .map(arg => `'${arg.getName().name}'`)
                           .join(', ')}`;
-            const assignString = `${
-                this.assignToVariableName
-                    ? ` ${this.assignToVariableName.description()}`
-                    : ''
-            }`;
-            return `calls function '${this.callVariable.name}' ${argumentsString}${assignString}`;
+
+            return `calls function '${this.callVariable.name}' ${argumentsString}${this.assignDescription()}`;
         };
         readonly code = (): string => {
-            const argumentsString = this.functionArguments
-                .map(arg => `${arg.getName().name}`)
-                .join(', ');
-            const assignString = `${
-                this.assignToVariableName
-                    ? `${this.assignToVariableName.code()} `
-                    : ''
-            }`;
-            return `${assignString}${this.callVariable.name}(${argumentsString})\n`;
-        };
-
-        readonly assignToVariable = (context: ILanguageContext): boolean => {
-            if (this.assignToVariableName === null) {
-                this.assignToVariableName = new LanguageVariable(context);
-            }
-            return true;
+            const argumentsString = this.functionArguments.map(arg => `${arg.getName().name}`).join(', ');
+            return `${this.assignCode()}${this.callVariable.name}(${argumentsString})\n`;
         };
     }
 
-    export const callGenerator = createGenerator(
-        Call,
-        new Difficulty(1, 1),
-        (context: ILanguageContext): boolean => {
-            return context.validUsedVariableExists();
-        }
-    );
+    export const callGenerator = createGenerator(Call, new Difficulty(1, 1), (context: ILanguageContext): boolean => {
+        return context.validUsedVariableExists();
+    });
 
     Function.register(callGenerator);
 }

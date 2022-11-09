@@ -9,10 +9,7 @@ export namespace DifficultyNamespace {
             this.maxDifficulty = maxDifficulty;
         }
         readonly contain = (difficulty: number): boolean => {
-            return (
-                this.minDifficulty <= difficulty &&
-                difficulty <= this.maxDifficulty
-            );
+            return this.minDifficulty <= difficulty && difficulty <= this.maxDifficulty;
         };
 
         readonly canBeLess = (difficulty: number): boolean => {
@@ -20,10 +17,7 @@ export namespace DifficultyNamespace {
         };
 
         readonly randomDifficultyThatFits = (difficulty: number): number => {
-            return randomIntFromInterval(
-                this.minDifficulty,
-                Math.min(difficulty, this.maxDifficulty)
-            );
+            return randomIntFromInterval(this.minDifficulty, Math.min(difficulty, this.maxDifficulty));
         };
     }
 }

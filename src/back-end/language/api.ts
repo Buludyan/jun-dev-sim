@@ -5,10 +5,7 @@ import {ProblemNamespace} from './problem';
 import ILanguageContext = InterfacesNamespace.ILanguageContext;
 import LanguageContext = LanguageContextNamespace.LanguageContext;
 
-export const _randomProblem = (
-    context: ILanguageContext,
-    difficulty: number
-) => {
+export const _randomProblem = (context: ILanguageContext, difficulty: number) => {
     return context.createPiece(ProblemNamespace.Problem, difficulty);
 };
 

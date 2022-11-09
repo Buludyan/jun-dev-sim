@@ -16,9 +16,7 @@ export namespace UtilsNamespace {
         const statements: ILanguagePiece[] = [];
         const allLength = allStatementGenerators.length;
         if (allLength === 0) {
-            throw new Error(
-                `Unable to generate pieces, allStatementGenerators is empty`
-            );
+            throw new Error(`Unable to generate pieces, allStatementGenerators is empty`);
         }
         let numberOfFailedRetries = 100;
         while (difficulty > 0 && numberOfFailedRetries !== 0) {
@@ -26,14 +24,8 @@ export namespace UtilsNamespace {
             console.log(`index = ${index}`);
             const statementGenerator = allStatementGenerators[index];
             if (statementGenerator.canGenerate(context, difficulty)) {
-                statements.push(
-                    statementGenerator.generateWithRandomDifficulty(
-                        context,
-                        difficulty
-                    )
-                );
-                difficulty -=
-                    statements[statements.length - 1].currentDifficulty();
+                statements.push(statementGenerator.generateWithRandomDifficulty(context, difficulty));
+                difficulty -= statements[statements.length - 1].currentDifficulty();
             } else {
                 --numberOfFailedRetries;
             }
@@ -52,18 +44,14 @@ export namespace UtilsNamespace {
         const statements: ILanguagePiece[] = [];
         const allLength = allStatementGenerators.length;
         if (allLength === 0) {
-            throw new Error(
-                `Unable to generate pieces, allStatementGenerators is empty`
-            );
+            throw new Error(`Unable to generate pieces, allStatementGenerators is empty`);
         }
         let numberOfFailedRetries = 100;
         while (numberOfFailedRetries !== 0) {
             const index = randomIntFromInterval(0, allLength - 1);
             const statementGenerator = allStatementGenerators[index];
             if (statementGenerator.canGenerateOnlyOne(context, difficulty)) {
-                statements.push(
-                    statementGenerator.generate(context, difficulty)
-                );
+                statements.push(statementGenerator.generate(context, difficulty));
                 break;
             } else {
                 --numberOfFailedRetries;
@@ -80,46 +68,26 @@ export namespace UtilsNamespace {
             new (context: ILanguageContext, difficulty: number): ProblemPiece;
         },
         rangedDifficulty: Difficulty,
-        additionalConditionsOfCreation:
-            | ((context: ILanguageContext) => boolean)
-            | null
+        additionalConditionsOfCreation: ((context: ILanguageContext) => boolean) | null
     ): IPieceGenerator => {
         return {
-            canGenerate: (
-                context: ILanguageContext,
-                difficulty: number
-            ): boolean => {
+            canGenerate: (context: ILanguageContext, difficulty: number): boolean => {
                 const additionalCondition = additionalConditionsOfCreation
                     ? additionalConditionsOfCreation(context)
                     : true;
-                return (
-                    rangedDifficulty.canBeLess(difficulty) &&
-                    additionalCondition
-                );
+                return rangedDifficulty.canBeLess(difficulty) && additionalCondition;
             },
-            canGenerateOnlyOne: (
-                context: ILanguageContext,
-                difficulty: number
-            ): boolean => {
+            canGenerateOnlyOne: (context: ILanguageContext, difficulty: number): boolean => {
                 const additionalCondition = additionalConditionsOfCreation
                     ? additionalConditionsOfCreation(context)
                     : true;
-                return (
-                    rangedDifficulty.contain(difficulty) && additionalCondition
-                );
+                return rangedDifficulty.contain(difficulty) && additionalCondition;
             },
-            generate: (
-                context: ILanguageContext,
-                difficulty: number
-            ): ILanguagePiece => {
+            generate: (context: ILanguageContext, difficulty: number): ILanguagePiece => {
                 return context.createPiece(piece, difficulty);
             },
-            generateWithRandomDifficulty: (
-                context: ILanguageContext,
-                difficulty: number
-            ): ILanguagePiece => {
-                const difficultyOfThisStatement =
-                    rangedDifficulty.randomDifficultyThatFits(difficulty);
+            generateWithRandomDifficulty: (context: ILanguageContext, difficulty: number): ILanguagePiece => {
+                const difficultyOfThisStatement = rangedDifficulty.randomDifficultyThatFits(difficulty);
                 return context.createPiece(piece, difficultyOfThisStatement);
             },
         };

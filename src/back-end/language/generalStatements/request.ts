@@ -5,7 +5,9 @@ import {InterfacesNamespace} from '../interfaces';
 import {FunctionNamespace} from '../function/function';
 import {UtilsNamespace} from '../utils';
 import {LanguageVariableNamespace} from '../languageVariable';
+import {AssignableNamespace} from '../assignable';
 
+import Assignable = AssignableNamespace.Assignable;
 import ILanguageContext = InterfacesNamespace.ILanguageContext;
 import ILanguagePiece = InterfacesNamespace.ILanguagePiece;
 import ILanguageVariable = InterfacesNamespace.ILanguageVariable;
@@ -28,16 +30,9 @@ export namespace RequestNamespace {
         readonly code = (): string => {
             return `db`;
         };
-        readonly assignToVariable = (context: ILanguageContext): boolean => {
-            return false;
-        };
     }
 
-    export const requestToDbGenerator = createGenerator(
-        RequestToDb,
-        new Difficulty(0, 0),
-        null
-    );
+    export const requestToDbGenerator = createGenerator(RequestToDb, new Difficulty(0, 0), null);
 
     class RequestToOs implements ILanguagePiece {
         private readonly guard: 'RequestToOs' = 'RequestToOs';
@@ -51,15 +46,8 @@ export namespace RequestNamespace {
         readonly code = (): string => {
             return `os`;
         };
-        readonly assignToVariable = (context: ILanguageContext): boolean => {
-            return false;
-        };
     }
-    export const requestToOsGenerator = createGenerator(
-        RequestToOs,
-        new Difficulty(0, 0),
-        null
-    );
+    export const requestToOsGenerator = createGenerator(RequestToOs, new Difficulty(0, 0), null);
 
     class RequestToFs implements ILanguagePiece {
         private readonly guard: 'RequestToFs' = 'RequestToFs';
@@ -73,16 +61,8 @@ export namespace RequestNamespace {
         readonly code = (): string => {
             return `fs`;
         };
-
-        readonly assignToVariable = (context: ILanguageContext): boolean => {
-            return false;
-        };
     }
-    export const requestToFsGenerator = createGenerator(
-        RequestToFs,
-        new Difficulty(0, 0),
-        null
-    );
+    export const requestToFsGenerator = createGenerator(RequestToFs, new Difficulty(0, 0), null);
 
     class RequestToWeb implements ILanguagePiece {
         private readonly guard: 'RequestToWeb' = 'RequestToWeb';
@@ -96,70 +76,36 @@ export namespace RequestNamespace {
         readonly code = (): string => {
             return `web`;
         };
-        readonly assignToVariable = (context: ILanguageContext): boolean => {
-            return false;
-        };
     }
-    export const requestToWebGenerator = createGenerator(
-        RequestToWeb,
-        new Difficulty(0, 0),
-        null
-    );
+    export const requestToWebGenerator = createGenerator(RequestToWeb, new Difficulty(0, 0), null);
 
-    export class Request implements ILanguagePiece {
+    export class Request extends Assignable implements ILanguagePiece {
         private readonly guard: 'Request' = 'Request';
 
-        protected static readonly allStatementGenerators: IPieceGenerator[] =
-            [];
+        protected static readonly allStatementGenerators: IPieceGenerator[] = [];
         public static readonly register = (statement: IPieceGenerator) => {
             this.allStatementGenerators.push(statement);
         };
 
-        assignToVariableName: ILanguageVariable | null = null;
         private readonly requestTo: ILanguagePiece;
         constructor(context: ILanguageContext, private difficulty: number) {
-            const index = randomIntFromInterval(
-                0,
-                Request.allStatementGenerators.length - 1
-            );
-            this.requestTo = Request.allStatementGenerators[index].generate(
-                context,
-                difficulty
-            );
+            super();
+            const index = randomIntFromInterval(0, Request.allStatementGenerators.length - 1);
+            this.requestTo = Request.allStatementGenerators[index].generate(context, difficulty);
         }
         readonly currentDifficulty = (): number => {
             return this.difficulty;
         };
 
         readonly description = (): string => {
-            const assignString = `${
-                this.assignToVariableName
-                    ? ` ${this.assignToVariableName.description()}`
-                    : ''
-            }`;
-            return `makes request to ${this.requestTo.description()}${assignString}`;
+            return `makes request to ${this.requestTo.description()}${this.assignDescription()}`;
         };
         readonly code = (): string => {
-            const assignString = `${
-                this.assignToVariableName
-                    ? `${this.assignToVariableName.code()} `
-                    : ''
-            }`;
-            return `${assignString}request to ${this.requestTo.code()}\n`;
-        };
-        readonly assignToVariable = (context: ILanguageContext): boolean => {
-            if (this.assignToVariableName === null) {
-                this.assignToVariableName = new LanguageVariable(context);
-            }
-            return true;
+            return `${this.assignCode()}request to ${this.requestTo.code()}\n`;
         };
     }
 
-    export const requestGenerator = createGenerator(
-        Request,
-        new Difficulty(1, 1),
-        null
-    );
+    export const requestGenerator = createGenerator(Request, new Difficulty(1, 1), null);
 
     Request.register(requestToDbGenerator);
     Request.register(requestToFsGenerator);

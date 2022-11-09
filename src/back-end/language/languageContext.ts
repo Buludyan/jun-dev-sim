@@ -1,7 +1,9 @@
 import {randomIntFromInterval} from '../utils';
 import {InterfacesNamespace} from './interfaces';
 import {PrimitiveTypesNamespace} from './primitiveTypes';
+import {AssignableNamespace} from './assignable';
 
+import isAssignable = AssignableNamespace.isAssignable;
 import ILanguageContext = InterfacesNamespace.ILanguageContext;
 import ILanguagePiece = InterfacesNamespace.ILanguagePiece;
 import ILanguagePieceName = InterfacesNamespace.ILanguagePieceName;
@@ -25,10 +27,7 @@ export namespace LanguageContextNamespace {
 
         readonly createPiece = <ProblemPiece extends ILanguagePiece>(
             piece: {
-                new (
-                    context: ILanguageContext,
-                    difficulty: number
-                ): ProblemPiece;
+                new (context: ILanguageContext, difficulty: number): ProblemPiece;
             },
             difficulty: number
         ): ProblemPiece => {
@@ -44,15 +43,11 @@ export namespace LanguageContextNamespace {
         };
 
         readonly generateValidPrimitiveType = (): PrimitiveTypesType => {
-            return primitiveTypes[
-                randomIntFromInterval(0, primitiveTypes.length - 1)
-            ];
+            return primitiveTypes[randomIntFromInterval(0, primitiveTypes.length - 1)];
         };
 
         private readonly allValidVariablesToUse: ILanguageVariable[] = [];
-        readonly registerValidVariablesToUse = (
-            variables: ILanguageVariable
-        ): void => {
+        readonly registerValidVariablesToUse = (variables: ILanguageVariable): void => {
             this.allValidVariablesToUse.push(variables);
         };
 
@@ -65,40 +60,28 @@ export namespace LanguageContextNamespace {
                 if (allVariablesLength === 0) {
                     return null;
                 }
-                randomIndexOfAllVariables = randomIntFromInterval(
-                    0,
-                    allVariablesLength - 1
-                );
+                randomIndexOfAllVariables = randomIntFromInterval(0, allVariablesLength - 1);
             } else {
                 const allPiecesLength = this.allLanguagePieces.length;
-                let randomIndexOfAllPieces = randomIntFromInterval(
-                    0,
-                    allPiecesLength - 1
-                );
+                let randomIndexOfAllPieces = randomIntFromInterval(0, allPiecesLength - 1);
                 let numberOfRetries = 100;
-                while (
-                    !this.allLanguagePieces[
-                        randomIndexOfAllPieces
-                    ].assignToVariable(this) &&
-                    numberOfRetries !== 0
-                ) {
+                while (!isAssignable(this.allLanguagePieces[randomIndexOfAllPieces]) && numberOfRetries !== 0) {
                     numberOfRetries--;
-                    randomIndexOfAllPieces = randomIntFromInterval(
-                        0,
-                        this.allLanguagePieces.length - 1
-                    );
+                    randomIndexOfAllPieces = randomIntFromInterval(0, this.allLanguagePieces.length - 1);
                 }
                 if (numberOfRetries !== 0) {
-                    randomIndexOfAllVariables =
-                        this.allValidVariablesToUse.length - 1;
+                    const assignablePiece = this.allLanguagePieces[randomIndexOfAllPieces];
+                    if (!isAssignable(assignablePiece)) {
+                        throw new Error('this must be assignable');
+                    } else {
+                        assignablePiece.assignToVariable(this);
+                    }
+                    randomIndexOfAllVariables = this.allValidVariablesToUse.length - 1;
                 } else {
                     if (allVariablesLength === 0) {
                         return null;
                     }
-                    randomIndexOfAllVariables = randomIntFromInterval(
-                        0,
-                        allVariablesLength - 1
-                    );
+                    randomIndexOfAllVariables = randomIntFromInterval(0, allVariablesLength - 1);
                 }
             }
 

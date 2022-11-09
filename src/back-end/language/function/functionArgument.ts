@@ -23,11 +23,5 @@ export namespace FunctionArgumentNamespace {
         readonly code = (): string => {
             return `${this.arg.getName().name}:${this.arg.getType()}`;
         };
-        readonly assignToVariable = (context: ILanguageContext): boolean => {
-            return false;
-        };
-        readonly getVariableName = (): ILanguagePieceName => {
-            return this.arg.getName();
-        };
     }
 }

@@ -3,4 +3,5 @@ module.exports = {
   "endOfLine": "auto",
   "tabWidth": 4,
   "useTabs": false,
+  "printWidth": 120
 }
