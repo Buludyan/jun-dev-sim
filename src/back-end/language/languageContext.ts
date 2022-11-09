@@ -88,7 +88,10 @@ export namespace LanguageContextNamespace {
                         this.allLanguagePieces.length - 1
                     );
                 }
-                if (numberOfRetries === 0) {
+                if (numberOfRetries !== 0) {
+                    randomIndexOfAllVariables =
+                        this.allValidVariablesToUse.length - 1;
+                } else {
                     if (allVariablesLength === 0) {
                         return null;
                     }
@@ -96,9 +99,6 @@ export namespace LanguageContextNamespace {
                         0,
                         allVariablesLength - 1
                     );
-                } else {
-                    randomIndexOfAllVariables =
-                        this.allValidVariablesToUse.length - 1;
                 }
             }
 

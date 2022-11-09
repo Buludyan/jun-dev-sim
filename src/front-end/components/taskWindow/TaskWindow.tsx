@@ -3,7 +3,7 @@ import './TaskWindow.scss';
 import {randomProblem} from '../../../back-end/language/api';
 
 export const TaskWindow = () => {
-    const problem = randomProblem(5);
+    const problem = randomProblem(10);
     return (
         <div className="taskWindow">
             <div className="taskWindow__inner">
