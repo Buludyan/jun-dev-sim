@@ -1,9 +1,8 @@
 import React from 'react';
 import './TaskWindow.scss';
-import {randomProblem, initLanguage} from '../../../back-end/language/api';
+import {randomProblem} from '../../../back-end/language/api';
 
 export const TaskWindow = () => {
-    initLanguage();
     const problem = randomProblem(5);
     return (
         <div className="taskWindow">

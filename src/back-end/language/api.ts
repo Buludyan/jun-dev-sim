@@ -1,22 +1,15 @@
-import {ILanguageContext} from './interfaces';
-import {LanguageContext} from './languageContext';
-import {Problem} from './problem';
-import {registrateAllComponents} from './registrator';
-
-let initialized = false;
-export const initLanguage = () => {
-    registrateAllComponents();
-    initialized = true;
-};
+export * from './exports';
+import {InterfacesNamespace} from './interfaces';
+import {LanguageContextNamespace} from './languageContext';
+import {ProblemNamespace} from './problem';
+import ILanguageContext = InterfacesNamespace.ILanguageContext;
+import LanguageContext = LanguageContextNamespace.LanguageContext;
 
 export const _randomProblem = (
     context: ILanguageContext,
     difficulty: number
 ) => {
-    if (!initialized) {
-        throw new Error(`Initialize language before use (call initLanguage)`);
-    }
-    return context.createPiece(Problem, difficulty);
+    return context.createPiece(ProblemNamespace.Problem, difficulty);
 };
 
 export const randomProblem = (difficulty: number) => {
