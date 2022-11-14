@@ -2,10 +2,11 @@ import React, {useEffect, useState} from 'react';
 import './Clock.scss';
 
 export const Clock = () => {
-  const [state, setState] = useState<{minute: number; hour: number}>({minute: 0.5, hour: 0.79});
+  const [state, setState] = useState<{minute: number; hour: number}>({minute: 1, hour: 0.83});
 
   const setClock = () => {
     // TODO: refine
+    // TODO: move to config file
     const oneHourElapseTimeInSeconds = 15;
     const timeCoef = oneHourElapseTimeInSeconds * 100;
     setState({

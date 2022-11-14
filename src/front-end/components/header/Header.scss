@@ -35,4 +35,23 @@
         width: 25px;
         height: 25px;
     }
+
+    &__energy-value {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        height: 20px;
+        width: 70px;
+        border: 2px solid #3D9414;
+        border-radius: 5px;
+        margin-left: 5px;
+        padding: 0;
+    }
+
+    &__energy-degree {
+        transition: all 2s;
+        margin: 0;
+        height: 105%;
+        border-radius: 3px;
+    }
 }
