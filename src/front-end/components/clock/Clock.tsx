@@ -5,7 +5,9 @@ export const Clock = () => {
   const [state, setState] = useState<{minute: number; hour: number}>({minute: 0.5, hour: 0.79});
 
   const setClock = () => {
-    const timeCoef = 120;
+    // TODO: refine
+    const oneHourElapseTimeInSeconds = 15;
+    const timeCoef = oneHourElapseTimeInSeconds * 100;
     setState({
       minute: (state.minute += 1 / timeCoef),
       hour: (state.hour += 1 / timeCoef / 12),
@@ -15,7 +17,7 @@ export const Clock = () => {
   useEffect(() => {
     setInterval(() => {
       setClock();
-    }, 1000);
+    }, 10);
   }, []);
 
   return (
