@@ -1,0 +1,17 @@
+.work {
+  height: 100%;
+  width: 100vw;
+}
+
+.work__inner {
+  width: 100%;
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+}
+/*# sourceMappingURL=WorkProcess.css.map */

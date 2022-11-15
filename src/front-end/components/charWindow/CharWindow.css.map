@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,WAAW,CAAC;EACR,MAAM,EAAE,IAAI;EACZ,KAAK,EAAE,IAAI;CASd;;AAPI,AAAD,kBAAQ,CAAC;EACL,MAAM,EAAE,KAAK;EACb,KAAK,EAAE,IAAI;EACX,OAAO,EAAE,IAAI;EACb,eAAe,EAAE,MAAM;EACvB,WAAW,EAAE,MAAM;CACtB",
+    "sources": [
+        "CharWindow.scss"
+    ],
+    "names": [],
+    "file": "CharWindow.css"
+}

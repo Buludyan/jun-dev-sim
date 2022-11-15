@@ -7,8 +7,8 @@ import {WorkProcess} from './front-end/pages/work-process/WorkProcess';
 const App = () => {
   return (
     <div className="app">
+      <Header />
       <div className="app__inner">
-        <Header />
         <WorkProcess />
       </div>
     </div>

@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,KAAK,CAAC;EACJ,MAAM,EAAE,IAAI;EACZ,KAAK,EAAE,KAAK;CAQb;;AANE,AAAD,YAAQ,CAAC;EACP,KAAK,EAAE,IAAI;EACX,MAAM,EAAE,IAAI;EACZ,OAAO,EAAE,IAAI;EACb,cAAc,EAAE,GAAG;CACpB",
+    "sources": [
+        "WorkProcess.scss"
+    ],
+    "names": [],
+    "file": "WorkProcess.css"
+}
