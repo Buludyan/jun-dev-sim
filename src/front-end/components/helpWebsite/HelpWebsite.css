@@ -1,0 +1,106 @@
+.closed {
+  -webkit-transition: 1s;
+  transition: 1s;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  height: 100%;
+  width: 50vw;
+  background-color: #5d5dfa;
+  position: fixed;
+  top: 0;
+  left: 100%;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.opened {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  height: 100%;
+  width: 50vw;
+  position: fixed;
+  top: 0;
+  left: 50%;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+  pointer-events: all;
+  z-index: 5;
+}
+
+.helpWebsite {
+  height: 100%;
+  width: 50vw;
+  -webkit-transition: all 0.5s;
+  transition: all 0.5s;
+}
+
+.helpWebsite__inner {
+  height: 100vh;
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background-color: #5d5dfa;
+}
+
+.helpWebsite__header {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 0 5px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  width: 100%;
+  height: 20px;
+  background-color: #c6bfbf;
+}
+
+.helpWebsite__logo {
+  height: 18px;
+  width: 20px;
+}
+
+.helpWebsite__search {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  width: 70%;
+  height: 25%;
+}
+/*# sourceMappingURL=HelpWebsite.css.map */

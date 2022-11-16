@@ -8,6 +8,7 @@ export const WorkProcess = () => {
   const problem = randomProblem(10);
   const descripton: string = problem.description();
   const code: string = problem.code();
+
   return (
     <div className="work">
       <div className="work__inner">

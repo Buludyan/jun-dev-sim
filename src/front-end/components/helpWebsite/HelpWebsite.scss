@@ -1,0 +1,70 @@
+.closed {
+    transition: 1s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 50vw;
+    background-color: rgb(93, 93, 250);
+    position: fixed;
+    top: 0;
+    left: 100%;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 5;
+}
+
+.opened {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 50vw;
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transition: 0.4s;
+    pointer-events: all;
+    z-index: 5;
+}
+
+.helpWebsite {
+    height: 100%;
+    width: 50vw;
+    transition: all 0.5s;
+
+    &__inner {
+        height: 100vh;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        background-color: rgb(93, 93, 250);
+    }
+
+    &__header {
+        box-sizing: border-box;
+        padding: 0 5px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        width: 100%;
+        height: 20px;
+        background-color: rgb(198, 191, 191);
+    }
+
+    &__logo {
+        height: 18px;
+        width: 20px;
+    }
+
+    &__search {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        width: 70%;
+        height: 25%;
+    }
+}
+

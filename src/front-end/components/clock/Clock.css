@@ -31,7 +31,7 @@
   left: 50%;
   -webkit-transform: translateX(-50%) translateY(-50%);
           transform: translateX(-50%) translateY(-50%);
-  z-index: 11;
+  z-index: 4;
 }
 
 .clock .number {
@@ -157,7 +157,7 @@
   background-color: black;
   -webkit-transform-origin: bottom;
           transform-origin: bottom;
-  z-index: 10;
+  z-index: 3;
 }
 
 .clock .hand.minute {

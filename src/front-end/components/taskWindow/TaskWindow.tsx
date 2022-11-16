@@ -1,4 +1,5 @@
 import React, {useCallback, useEffect, useState, FC} from 'react';
+import {useActions} from '../../hooks/actions';
 import './TaskWindow.scss';
 
 interface ITaskWindow {
@@ -8,6 +9,7 @@ interface ITaskWindow {
 
 export const TaskWindow: FC<ITaskWindow> = ({description, code}) => {
   const [solution, setSolution] = useState('');
+  const {setActive} = useActions();
 
   const onEnterHandler = useCallback(() => {
     console.log(code.split('\n'), solution.split('\n'));
@@ -65,6 +67,11 @@ export const TaskWindow: FC<ITaskWindow> = ({description, code}) => {
             className="taskWindow__cl-text"
             onChange={e => setSolution(e.target.value)}
           ></textarea>
+          <div className="taskWindow__cl-btns">
+            <button className="taskWindow__cl-btn" onClick={() => setActive()}>
+              ?
+            </button>
+          </div>
         </div>
       </div>
     </div>
