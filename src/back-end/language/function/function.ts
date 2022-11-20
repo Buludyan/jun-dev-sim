@@ -37,7 +37,15 @@ export namespace FunctionNamespace {
                 context.createPiece(FunctionArgument, difficulty),
                 context.createPiece(FunctionArgument, difficulty),
             ];
-            this.statements = generateStatementsTillDifficulty(context, Function.allStatementGenerators, difficulty);
+            this.difficulty -= this.functionArguments.reduce((sum, arg) => sum + arg.currentDifficulty(), 0);
+            if (this.difficulty <= 0) {
+                throw new Error(`This cannot be lower or equal to 0`);
+            }
+            this.statements = generateStatementsTillDifficulty(
+                context,
+                Function.allStatementGenerators,
+                this.difficulty
+            );
         }
         readonly currentDifficulty = (): number => {
             return this.difficulty;
@@ -64,6 +72,6 @@ export namespace FunctionNamespace {
         };
     }
 
-    export const functionGenerator = createGenerator(Function, new Difficulty(1, 10), null);
+    export const functionGenerator = createGenerator(Function, new Difficulty(1, 100), null);
     ProblemNamespace.Problem.register(functionGenerator);
 }
