@@ -6,7 +6,7 @@ import {AssignableNamespace} from './assignable';
 import isAssignable = AssignableNamespace.isAssignable;
 import ILanguageContext = InterfacesNamespace.ILanguageContext;
 import ILanguagePiece = InterfacesNamespace.ILanguagePiece;
-import ILanguagePieceName = InterfacesNamespace.LanguagePieceName;
+import LanguagePieceName = InterfacesNamespace.LanguagePieceName;
 import PrimitiveTypesType = InterfacesNamespace.PrimitiveTypesType;
 import primitiveTypes = PrimitiveTypesNamespace.primitiveTypes;
 import ILanguageVariable = InterfacesNamespace.ILanguageVariable;
@@ -14,7 +14,7 @@ import ILanguageVariable = InterfacesNamespace.ILanguageVariable;
 export namespace LanguageContextNamespace {
   export class LanguageContext implements ILanguageContext {
     nextPieceNameIndex: number = 0;
-    readonly pieceNames: ILanguagePieceName[] = [];
+    readonly pieceNames: LanguagePieceName[] = [];
     constructor() {
       for (let i = 0; i < 10000; ++i) {
         this.pieceNames.push({
@@ -38,7 +38,7 @@ export namespace LanguageContextNamespace {
 
     readonly getAllPieces = () => this.allLanguagePieces;
 
-    readonly generateValidPieceName = (): ILanguagePieceName => {
+    readonly generateValidPieceName = (): LanguagePieceName => {
       return this.pieceNames[this.nextPieceNameIndex++];
     };
 

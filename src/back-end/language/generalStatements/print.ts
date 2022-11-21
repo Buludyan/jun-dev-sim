@@ -9,7 +9,7 @@ import {FunctionNamespace} from '../function/function';
 
 import ILanguageContext = InterfacesNamespace.ILanguageContext;
 import ILanguagePiece = InterfacesNamespace.ILanguagePiece;
-import ILanguagePieceName = InterfacesNamespace.LanguagePieceName;
+import LanguagePieceName = InterfacesNamespace.LanguagePieceName;
 import ILanguageVariable = InterfacesNamespace.ILanguageVariable;
 import IPieceGenerator = InterfacesNamespace.IPieceGenerator;
 import LanguageVariable = LanguageVariableNamespace.LanguageVariable;

@@ -12,7 +12,7 @@ import {AssignableNamespace} from '../assignable';
 import Assignable = AssignableNamespace.Assignable;
 import ILanguageContext = InterfacesNamespace.ILanguageContext;
 import ILanguagePiece = InterfacesNamespace.ILanguagePiece;
-import ILanguagePieceName = InterfacesNamespace.LanguagePieceName;
+import LanguagePieceName = InterfacesNamespace.LanguagePieceName;
 import ILanguageVariable = InterfacesNamespace.ILanguageVariable;
 import IPieceGenerator = InterfacesNamespace.IPieceGenerator;
 import LanguageVariable = LanguageVariableNamespace.LanguageVariable;
@@ -28,7 +28,7 @@ export namespace CallNamespace {
     readonly _guard: typeof callTypeGuard = callTypeGuard;
     private readonly guard: 'Call' = 'Call';
 
-    private readonly callVariable: ILanguagePieceName;
+    private readonly callVariable: LanguagePieceName;
     private readonly functionArguments: ILanguageVariable[];
 
     constructor(context: ILanguageContext, private difficulty: number) {

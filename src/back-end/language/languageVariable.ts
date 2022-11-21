@@ -3,13 +3,13 @@ import {InterfacesNamespace} from './interfaces';
 import {UtilsNamespace} from './utils';
 
 import ILanguageContext = InterfacesNamespace.ILanguageContext;
-import ILanguagePieceName = InterfacesNamespace.LanguagePieceName;
+import LanguagePieceName = InterfacesNamespace.LanguagePieceName;
 import ILanguageVariable = InterfacesNamespace.ILanguageVariable;
 import PrimitiveTypesType = InterfacesNamespace.PrimitiveTypesType;
 
 export namespace LanguageVariableNamespace {
   export class LanguageVariable implements ILanguageVariable {
-    private readonly name: ILanguagePieceName;
+    private readonly name: LanguagePieceName;
     private readonly type: PrimitiveTypesType;
     constructor(context: ILanguageContext) {
       this.name = context.generateValidPieceName();
@@ -23,7 +23,7 @@ export namespace LanguageVariableNamespace {
       return `var ${this.name.name}:${this.type} =`;
     };
 
-    readonly getName = (): ILanguagePieceName => {
+    readonly getName = (): LanguagePieceName => {
       return this.name;
     };
     readonly getType = (): PrimitiveTypesType => {

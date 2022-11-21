@@ -6,7 +6,7 @@ import ILanguageContext = InterfacesNamespace.ILanguageContext;
 import ILanguagePiece = InterfacesNamespace.ILanguagePiece;
 import ILanguageVariable = InterfacesNamespace.ILanguageVariable;
 import LanguageVariable = LanguageVariableNamespace.LanguageVariable;
-import ILanguagePieceName = InterfacesNamespace.LanguagePieceName;
+import LanguagePieceName = InterfacesNamespace.LanguagePieceName;
 import PrimitiveTypesType = InterfacesNamespace.PrimitiveTypesType;
 import LanguagePieceDescription = InterfacesNamespace.LanguagePieceDescription;
 
