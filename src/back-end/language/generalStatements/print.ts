@@ -1,4 +1,4 @@
-import {randomIntFromInterval} from '../../utils';
+import {IGuard, randomIntFromInterval} from '../../utils';
 import {DifficultyNamespace} from '../difficulty';
 import {InterfacesNamespace} from '../interfaces';
 
@@ -9,44 +9,55 @@ import {FunctionNamespace} from '../function/function';
 
 import ILanguageContext = InterfacesNamespace.ILanguageContext;
 import ILanguagePiece = InterfacesNamespace.ILanguagePiece;
-import ILanguagePieceName = InterfacesNamespace.ILanguagePieceName;
+import ILanguagePieceName = InterfacesNamespace.LanguagePieceName;
 import ILanguageVariable = InterfacesNamespace.ILanguageVariable;
 import IPieceGenerator = InterfacesNamespace.IPieceGenerator;
 import LanguageVariable = LanguageVariableNamespace.LanguageVariable;
 import Difficulty = DifficultyNamespace.Difficulty;
 import createGenerator = UtilsNamespace.createGenerator;
 import Function = FunctionNamespace.Function;
+import LanguagePieceDescription = InterfacesNamespace.LanguagePieceDescription;
 
 export namespace PrintNamespace {
-    export class Print implements ILanguagePiece {
-        private readonly guard: 'Print' = 'Print';
+  const printTypeGuard = 'printTypeGuard';
+  export class Print implements ILanguagePiece, IGuard<typeof printTypeGuard> {
+    readonly _guard: typeof printTypeGuard = printTypeGuard;
 
-        private readonly printVariable: ILanguageVariable;
-        constructor(context: ILanguageContext, private difficulty: number) {
-            const variable = context.getValidUsedVariable();
-            if (variable === null) {
-                throw new Error(`Cannot create print statement`);
-            }
-            this.printVariable = variable;
-        }
-        readonly currentDifficulty = (): number => {
-            return this.difficulty;
-        };
-
-        readonly description = (): string => {
-            return `prints object '${this.printVariable.getName().name}'`;
-        };
-        readonly code = (): string => {
-            return `print ${this.printVariable.getName().name}\n`;
-        };
-        readonly assignToVariable = (context: ILanguageContext): boolean => {
-            return false;
-        };
+    private readonly printVariable: ILanguageVariable;
+    constructor(context: ILanguageContext, private difficulty: number) {
+      const variable = context.getValidUsedVariable();
+      if (variable === null) {
+        throw new Error(`Cannot create print statement`);
+      }
+      this.printVariable = variable;
     }
+    readonly currentDifficulty = (): number => {
+      return this.difficulty;
+    };
 
-    export const printGenerator = createGenerator(Print, new Difficulty(1, 1), (context: ILanguageContext): boolean => {
-        return context.validUsedVariableExists();
-    });
+    readonly description = (): string => {
+      return `prints object '${this.printVariable.getName().name}'`;
+    };
+    readonly code = (): string => {
+      return `print ${this.printVariable.getName().name}\n`;
+    };
+    readonly assignToVariable = (context: ILanguageContext): boolean => {
+      return false;
+    };
+    readonly usedPiecesDescriptions = (): LanguagePieceDescription[] => {
+      return [
+        {
+          key: printTypeGuard,
+          name: 'Print',
+          description: '// TODO',
+        },
+      ];
+    };
+  }
 
-    Function.register(printGenerator);
+  export const printGenerator = createGenerator(Print, new Difficulty(1, 1), (context: ILanguageContext): boolean => {
+    return context.validUsedVariableExists();
+  });
+
+  Function.register(printGenerator);
 }

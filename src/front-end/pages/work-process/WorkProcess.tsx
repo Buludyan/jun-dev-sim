@@ -8,8 +8,13 @@ import {createGameState} from '../../../back-end/api';
 export const WorkProcess = () => {
   const state = createGameState();
   const problem = randomProblem(state, 10);
+
   const descripton: string = problem.description();
   const code: string = problem.code();
+  const usedPiecesDescriptions = problem.usedPiecesDescriptions();
+  for (const part of usedPiecesDescriptions) {
+    console.log(part.name, part.description);
+  }
   return (
     <div className="work">
       <div className="work__inner">

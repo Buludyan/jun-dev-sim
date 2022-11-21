@@ -1,33 +1,34 @@
-import {randomIntFromInterval} from '../../utils';
+import {IGuard} from '../../utils';
 import {DifficultyNamespace} from '../difficulty';
 import {LanguageVariableNamespace} from '../languageVariable';
 import {UtilsNamespace} from '../utils';
 import {FunctionArgumentNamespace} from './functionArgument';
 import {InterfacesNamespace} from '../interfaces';
+import {ProblemNamespace} from '../problem';
 
 import Difficulty = DifficultyNamespace.Difficulty;
 import LanguageVariable = LanguageVariableNamespace.LanguageVariable;
 import ILanguageContext = InterfacesNamespace.ILanguageContext;
 import ILanguagePiece = InterfacesNamespace.ILanguagePiece;
 import ILanguageVariable = InterfacesNamespace.ILanguageVariable;
-import ILanguagePieceName = InterfacesNamespace.ILanguagePieceName;
+import LanguagePieceName = InterfacesNamespace.LanguagePieceName;
 import IPieceGenerator = InterfacesNamespace.IPieceGenerator;
-
+import LanguagePieceDescription = InterfacesNamespace.LanguagePieceDescription;
 import createGenerator = UtilsNamespace.createGenerator;
 import generateStatementsTillDifficulty = UtilsNamespace.generateStatementsTillDifficulty;
 import FunctionArgument = FunctionArgumentNamespace.FunctionArgument;
-import {ProblemNamespace} from '../problem';
 
 export namespace FunctionNamespace {
-  export class Function implements ILanguagePiece {
-    private readonly guard: 'Function' = 'Function';
+  const functionTypeGuard: 'functionTypeGuard' = 'functionTypeGuard';
+  export class Function implements ILanguagePiece, IGuard<typeof functionTypeGuard> {
+    readonly _guard: typeof functionTypeGuard = functionTypeGuard;
     // TODO: move from here
     protected static readonly allStatementGenerators: IPieceGenerator[] = [];
     public static readonly register = (statement: IPieceGenerator) => {
       this.allStatementGenerators.push(statement);
     };
 
-    private readonly functionName: ILanguagePieceName;
+    private readonly functionName: LanguagePieceName;
     private readonly functionArguments: FunctionArgument[];
     private readonly statements: ILanguagePiece[] = [];
     constructor(context: ILanguageContext, private difficulty: number) {
@@ -65,6 +66,17 @@ export namespace FunctionNamespace {
     };
     readonly assignToVariable = (context: ILanguageContext): boolean => {
       return false;
+    };
+    readonly usedPiecesDescriptions = (): LanguagePieceDescription[] => {
+      return [
+        {
+          key: functionTypeGuard,
+          name: 'Function',
+          description: '// TODO',
+        },
+        ...this.functionArguments.map(elem => elem.usedPiecesDescriptions()).flat(),
+        ...this.statements.map(elem => elem.usedPiecesDescriptions()).flat(),
+      ];
     };
   }
 

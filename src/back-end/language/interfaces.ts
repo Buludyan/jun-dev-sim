@@ -5,48 +5,55 @@ import Difficulty = DifficultyNamespace.Difficulty;
 import primitiveTypes = PrimitiveTypesNamespace.primitiveTypes;
 
 export namespace InterfacesNamespace {
-    export interface ILanguageContext {
-        readonly createPiece: <ProblemPiece extends ILanguagePiece>(
-            piece: {
-                new (context: ILanguageContext, difficulty: number): ProblemPiece;
-            },
-            difficulty: number
-        ) => ProblemPiece;
-        readonly generateValidPieceName: () => ILanguagePieceName;
-        readonly generateValidPrimitiveType: () => PrimitiveTypesType;
-        readonly registerValidVariablesToUse: (variables: ILanguageVariable) => void;
-        readonly getValidUsedVariable: () => ILanguageVariable | null;
-        readonly validUsedVariableExists: () => boolean;
-    }
+  export interface ILanguageContext {
+    readonly createPiece: <ProblemPiece extends ILanguagePiece>(
+      piece: {
+        new (context: ILanguageContext, difficulty: number): ProblemPiece;
+      },
+      difficulty: number
+    ) => ProblemPiece;
+    readonly generateValidPieceName: () => LanguagePieceName;
+    readonly generateValidPrimitiveType: () => PrimitiveTypesType;
+    readonly registerValidVariablesToUse: (variables: ILanguageVariable) => void;
+    readonly getValidUsedVariable: () => ILanguageVariable | null;
+    readonly validUsedVariableExists: () => boolean;
+  }
 
-    export interface ILanguagePieceName {
-        readonly name: string;
-    }
+  export type LanguagePieceName = {
+    readonly name: string;
+  };
 
-    export interface ILanguagePiece {
-        readonly currentDifficulty: () => number;
-        readonly description: () => string;
-        readonly code: () => string;
-        // TODO: add links
-        // TODO: add unlocks
-    }
+  export type LanguagePieceDescription = {
+    key: string;
+    name: string;
+    description: string;
+  };
 
-    export interface IPieceGenerator {
-        readonly canGenerate: (context: ILanguageContext, difficulty: number) => boolean;
-        readonly canGenerateOnlyOne: (context: ILanguageContext, difficulty: number) => boolean;
-        readonly generate: (context: ILanguageContext, difficulty: number) => ILanguagePiece;
-        readonly generateWithRandomDifficulty: (context: ILanguageContext, difficulty: number) => ILanguagePiece;
-        // readonly difficulty: (context: ILanguageContext) => Difficulty;
-    }
+  export interface ILanguagePiece {
+    readonly currentDifficulty: () => number;
+    readonly description: () => string;
+    readonly code: () => string;
+    readonly usedPiecesDescriptions: () => LanguagePieceDescription[];
+    // TODO: add links
+    // TODO: add unlocks
+  }
 
-    export interface IProblem {}
+  export interface IPieceGenerator {
+    readonly canGenerate: (context: ILanguageContext, difficulty: number) => boolean;
+    readonly canGenerateOnlyOne: (context: ILanguageContext, difficulty: number) => boolean;
+    readonly generate: (context: ILanguageContext, difficulty: number) => ILanguagePiece;
+    readonly generateWithRandomDifficulty: (context: ILanguageContext, difficulty: number) => ILanguagePiece;
+    // readonly difficulty: (context: ILanguageContext) => Difficulty;
+  }
 
-    export type PrimitiveTypesType = typeof primitiveTypes[number];
+  export interface IProblem {}
 
-    export interface ILanguageVariable {
-        readonly description: () => string;
-        readonly code: () => string;
-        readonly getName: () => ILanguagePieceName;
-        readonly getType: () => PrimitiveTypesType;
-    }
+  export type PrimitiveTypesType = typeof primitiveTypes[number];
+
+  export interface ILanguageVariable {
+    readonly description: () => string;
+    readonly code: () => string;
+    readonly getName: () => LanguagePieceName;
+    readonly getType: () => PrimitiveTypesType;
+  }
 }
