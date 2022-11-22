@@ -16,17 +16,13 @@ export const Header = () => {
     });
   };
 
-  let gameState = loadGameState();
+  const gameState = loadGameState();
 
   useEffect(() => {
     setInterval(() => {
       setParameters();
       // TODO: Question to Arman, is this OK?
-      updateGameState({
-        ...gameState,
-        currentMoney: gameState.currentMoney + 1,
-      });
-      gameState = loadGameState();
+      gameState.currentMoney = gameState.currentMoney + 1;
     }, 15);
   }, []);
 
