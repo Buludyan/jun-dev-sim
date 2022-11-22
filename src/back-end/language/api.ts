@@ -4,16 +4,15 @@ import {LanguageContextNamespace} from './languageContext';
 import {ProblemNamespace} from './problem';
 import ILanguageContext = InterfacesNamespace.ILanguageContext;
 import LanguageContext = LanguageContextNamespace.LanguageContext;
+import LanguagePieceDescription = InterfacesNamespace.LanguagePieceDescription;
 
-import {IGameStateNamespace} from '../interfaces/gameState';
-import IGameState = IGameStateNamespace.IGameState;
+import {GameStateNamespace} from '../gameState';
 
 export const _randomProblem = (context: ILanguageContext, difficulty: number) => {
   return context.createPiece(ProblemNamespace.Problem, difficulty);
 };
 
-export const randomProblem = (gameState: IGameState, difficulty: number) => {
+export const randomProblem = (difficulty: number) => {
   const context: LanguageContext = new LanguageContext();
-  gameState.currentProblem = _randomProblem(context, difficulty);
-  return gameState.currentProblem;
+  return _randomProblem(context, difficulty);
 };
