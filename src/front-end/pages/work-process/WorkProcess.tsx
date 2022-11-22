@@ -18,7 +18,6 @@ export const WorkProcess = () => {
   const problem2 = JSON.parse(JSON.stringify(problem)) as TypesNamespace.ProblemInformation;
   console.log(problem2.description, problem2.code, problem2.usedPiecesDescriptions);
 
-
   for (const part of usedPiecesDescriptions) {
     console.log(part.name, part.description);
   }
