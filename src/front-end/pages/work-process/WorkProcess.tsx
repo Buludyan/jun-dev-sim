@@ -2,23 +2,28 @@ import React from 'react';
 import {CharWindow} from '../../components/charWindow/CharWindow';
 import {TaskWindow} from '../../components/taskWindow/TaskWindow';
 import './WorkProcess.scss';
-import {randomProblem} from '../../../back-end/language/api';
-import {createGameState} from '../../../back-end/api';
+import {createGameState, randomProblem} from '../../../back-end/api';
+import {TypesNamespace} from '../../../back-end/types';
 
 export const WorkProcess = () => {
   const state = createGameState();
   const problem = randomProblem(state, 10);
 
-  const descripton: string = problem.description();
-  const code: string = problem.code();
-  const usedPiecesDescriptions = problem.usedPiecesDescriptions();
+  const description: string = problem.description;
+  const code: string = problem.code;
+  const usedPiecesDescriptions = problem.usedPiecesDescriptions;
+
+  console.log(description, code, usedPiecesDescriptions);
+  const problem2 = JSON.parse(JSON.stringify(problem)) as TypesNamespace.ProblemInformation;
+  console.log(problem2.description, problem2.code, problem2.usedPiecesDescriptions);
+
   for (const part of usedPiecesDescriptions) {
     console.log(part.name, part.description);
   }
   return (
     <div className="work">
       <div className="work__inner">
-        <TaskWindow description={descripton} code={code} />
+        <TaskWindow description={description} code={code} />
         <CharWindow />
       </div>
     </div>
