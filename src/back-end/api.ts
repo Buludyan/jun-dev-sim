@@ -7,8 +7,31 @@ import LanguagePieceDescription = InterfacesNamespace.LanguagePieceDescription;
 
 import ProblemInformation = TypesNamespace.ProblemInformation;
 
-export const createGameState = (): GameState => {
-  return new GameState();
+let globalGameState: GameState | null = null;
+const createNewGameState = (): GameState => {
+  if (globalGameState === null) {
+    globalGameState = {
+      currentEnergy: 0,
+      currentMoney: 0,
+      currentMood: 0,
+      currentMotivation: 0,
+      currentProblem: null,
+      currentTheme: null,
+    };
+  }
+  return globalGameState;
+};
+
+export const saveGameState = () => {
+  // TODO: implement
+  return;
+};
+export const loadGameState = (): GameState => {
+  // TODO: implement
+  return createNewGameState();
+};
+export const updateGameState = (gameState: GameState) => {
+  globalGameState = gameState;
 };
 
 export const randomProblem = (gameState: GameState, difficulty: number) => {
@@ -22,3 +45,5 @@ export const randomProblem = (gameState: GameState, difficulty: number) => {
   gameState.currentProblem = problemInformation;
   return problemInformation;
 };
+
+export const nextTheme = (gameState: GameState) => {};

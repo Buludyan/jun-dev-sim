@@ -2,11 +2,11 @@ import React from 'react';
 import {CharWindow} from '../../components/charWindow/CharWindow';
 import {TaskWindow} from '../../components/taskWindow/TaskWindow';
 import './WorkProcess.scss';
-import {createGameState, randomProblem} from '../../../back-end/api';
+import {loadGameState, randomProblem} from '../../../back-end/api';
 import {TypesNamespace} from '../../../back-end/types';
 
 export const WorkProcess = () => {
-  const state = createGameState();
+  const state = loadGameState();
   const problem = randomProblem(state, 10);
 
   const description: string = problem.description;
