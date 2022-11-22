@@ -6,6 +6,9 @@ import GameState = GameStateNamespace.GameState;
 import LanguagePieceDescription = InterfacesNamespace.LanguagePieceDescription;
 
 import ProblemInformation = TypesNamespace.ProblemInformation;
+import {ThemesNamespace} from './themes/themes';
+import allThemes = ThemesNamespace.allThemes;
+import {randomIntFromInterval} from './utils';
 
 let globalGameState: GameState | null = null;
 const createNewGameState = (): GameState => {
@@ -46,4 +49,11 @@ export const randomProblem = (gameState: GameState, difficulty: number) => {
   return problemInformation;
 };
 
-export const nextTheme = (gameState: GameState) => {};
+// TODO: redesign
+let currentThemeIndex = -1;
+export const nextTheme = (gameState: GameState) => {
+  const allThemesArray = allThemes();
+  currentThemeIndex = randomIntFromInterval(0, allThemesArray.length - 1);
+  gameState.currentTheme = allThemesArray[currentThemeIndex];
+  return gameState.currentTheme;
+};

@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import './Header.scss';
-import money from '../../assets/money.png';
-import energy from '../../assets/energy.png';
-import happy from '../../assets/happy.png';
-import leader from '../../assets/leader.png';
+import money from '../../../assets/money.png';
+import energy from '../../../assets/energy.png';
+import happy from '../../../assets/happy.png';
+import leader from '../../../assets/leader.png';
 import {loadGameState, updateGameState} from '../../../back-end/api';
 
 export const Header = () => {

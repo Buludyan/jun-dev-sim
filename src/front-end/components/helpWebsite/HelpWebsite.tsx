@@ -1,6 +1,6 @@
 import React, {FC} from 'react';
 import './HelpWebsite.scss';
-import queue from '../../assets/queue.png';
+import queue from '../../../assets/queue.png';
 import {useAppSelector} from '../../hooks/storeSelector';
 
 export const HelpWebsite: FC = () => {

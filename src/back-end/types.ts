@@ -11,7 +11,4 @@ export namespace TypesNamespace {
     description: string;
     usedPiecesDescriptions: LanguagePieceDescription[];
   };
-  export type GameTheme = {
-    currentThemeName: string;
-  };
 }
