@@ -4,6 +4,7 @@ import {TaskWindow} from '../../components/taskWindow/TaskWindow';
 import './WorkProcess.scss';
 import {randomProblem} from '../../../back-end/language/api';
 import {createGameState} from '../../../back-end/api';
+import {HelpWebsite} from '../../components/helpWebsite/HelpWebsite';
 
 export const WorkProcess = () => {
   const state = createGameState();
@@ -12,14 +13,16 @@ export const WorkProcess = () => {
   const descripton: string = problem.description();
   const code: string = problem.code();
   const usedPiecesDescriptions = problem.usedPiecesDescriptions();
-  for (const part of usedPiecesDescriptions) {
-    console.log(part.name, part.description);
-  }
+  console.log(usedPiecesDescriptions);
+  // for (const part of usedPiecesDescriptions) {
+  //   console.log(part.name, part.description);
+  // }
   return (
     <div className="work">
       <div className="work__inner">
         <TaskWindow description={descripton} code={code} />
         <CharWindow />
+        <HelpWebsite pieces={usedPiecesDescriptions} />
       </div>
     </div>
   );
