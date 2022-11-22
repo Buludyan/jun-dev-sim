@@ -7,12 +7,12 @@ import leader from '../../../assets/leader.png';
 import {loadGameState, updateGameState} from '../../../back-end/api';
 
 export const Header = () => {
-  const [state, setState] = useState<{length: number; color: number}>({length: 100, color: 100});
+  const [state, setState] = useState<{length: number; color: number}>({length: 56, color: 100});
 
   const setParameters = () => {
     setState({
-      length: (state.length -= 0.01),
-      color: (state.color -= 0.01),
+      length: (state.length -= 0.0056),
+      color: state.color <= 0 ? 0 : (state.color -= 0.01),
     });
   };
 
@@ -47,8 +47,11 @@ export const Header = () => {
             <div className="header__energy-value">
               <div
                 className="header__energy-degree"
-                style={{width: `${state.length}%`, backgroundColor: `hsl(${state.color}, 100%, 50%)`}}
+                style={{width: `${state.length}px`, backgroundColor: `hsl(${state.color}, 100%, 50%)`}}
               />
+              <div className="header__energy-degree-number">
+                {(state.color + '').slice(0, (state.color + '').indexOf('.'))}
+              </div>
             </div>
           </div>
         </div>

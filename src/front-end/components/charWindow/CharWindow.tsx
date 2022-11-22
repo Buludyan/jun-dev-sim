@@ -2,7 +2,6 @@ import React from 'react';
 import './CharWindow.scss';
 import background from '../../../assets/charachter_work.jpg';
 import {Clock} from '../clock/Clock';
-import {HelpWebsite} from '../helpWebsite/HelpWebsite';
 
 import {nextTheme, loadGameState} from '../../../back-end/api';
 
@@ -22,7 +21,6 @@ export const CharWindow = () => {
       >
         <Clock />
       </div>
-      <HelpWebsite />
     </div>
   );
 };

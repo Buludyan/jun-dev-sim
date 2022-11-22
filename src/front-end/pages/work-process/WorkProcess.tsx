@@ -4,6 +4,7 @@ import {TaskWindow} from '../../components/taskWindow/TaskWindow';
 import './WorkProcess.scss';
 import {loadGameState, randomProblem} from '../../../back-end/api';
 import {TypesNamespace} from '../../../back-end/types';
+import {HelpWebsite} from '../../components/helpWebsite/HelpWebsite';
 
 export const WorkProcess = () => {
   const state = loadGameState();
@@ -20,11 +21,13 @@ export const WorkProcess = () => {
   for (const part of usedPiecesDescriptions) {
     console.log(part.name, part.description);
   }
+
   return (
     <div className="work">
       <div className="work__inner">
         <TaskWindow description={description} code={code} />
         <CharWindow />
+        <HelpWebsite pieces={usedPiecesDescriptions} />
       </div>
     </div>
   );

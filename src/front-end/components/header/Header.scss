@@ -1,57 +1,65 @@
 .header {
-    width: 100%;
+  width: 100%;
+  height: 30px;
+  background-color: #000;
+
+  &__inner {
+    width: 95%;
     height: 30px;
-    background-color: #000;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+  }
 
-    &__inner {
-        width: 95%;
-        height: 30px;
-        display: flex;
-        flex-direction: row;
-        justify-content: flex-start;
-        align-items: center;
-    }
+  &__stats {
+    width: 350px;
+    height: 90%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
 
-    &__stats {
-        width: 350px;
-        height: 90%;
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-    }
+  &__stat {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    height: 100%;
+    width: 90px;
+    color: white;
+  }
 
-    &__stat {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-around;
-        align-items: center;
-        height: 100%;
-        width: 90px;
-        color: white;
-    }
+  &__icon {
+    width: 25px;
+    height: 25px;
+  }
 
-    &__icon {
-        width: 25px;
-        height: 25px;
-    }
+  &__energy-value {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    height: 20px;
+    width: 70px;
+    border: 2px solid #3d9414;
+    border-radius: 5px;
+    margin-left: 5px;
+    padding: 0;
+  }
 
-    &__energy-value {
-        display: flex;
-        align-items: center;
-        justify-content: flex-start;
-        height: 20px;
-        width: 70px;
-        border: 2px solid #3D9414;
-        border-radius: 5px;
-        margin-left: 5px;
-        padding: 0;
-    }
+  &__energy-degree {
+    transition: all 2s;
+    margin: 0;
+    height: 21px;
+    border-radius: 3px;
+    position: absolute;
+  }
 
-    &__energy-degree {
-        transition: all 2s;
-        margin: 0;
-        height: 105%;
-        border-radius: 3px;
-    }
+  &__energy-degree-number {
+    color: white;
+    position: relative;
+    width: 20px;
+    left: calc(50% - 7px)
+  }
 }
