@@ -8,7 +8,6 @@
   opacity: 0;
   pointer-events: none;
   z-index: 5;
-  backdrop-filter: blur(8px);
 }
 
 .opened {
@@ -20,7 +19,7 @@
   transition: 0.4s;
   pointer-events: all;
   z-index: 5;
-  backdrop-filter: blur(8px);
+  backdrop-filter: blur(20px);
 }
 
 .helpWebsite {

@@ -11,4 +11,10 @@ export namespace TypesNamespace {
     description: string;
     usedPiecesDescriptions: LanguagePieceDescription[];
   };
+  export enum DayState {
+    Meeting = 'Meeting',
+    Work = 'Work',
+    Lunch = 'Lunch',
+    Home = 'Home',
+  }
 }

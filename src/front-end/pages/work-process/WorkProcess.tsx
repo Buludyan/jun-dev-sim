@@ -8,7 +8,7 @@ import {HelpWebsite} from '../../components/helpWebsite/HelpWebsite';
 
 export const WorkProcess = () => {
   const state = loadGameState();
-  const problem = randomProblem(state, 10);
+  const problem = state.currentProblem ?? randomProblem(state, 10);
 
   const description: string = problem.description;
   const code: string = problem.code;

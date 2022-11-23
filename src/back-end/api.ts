@@ -3,15 +3,18 @@ import {InterfacesNamespace} from './language/interfaces';
 import {ThemesNamespace} from './themes/themes';
 import {ClockNamespace} from './clock/clock';
 import {GameStateNamespace} from './gameState';
-import {randomIntFromInterval} from './utils';
+import {randomIntFromInterval, safeTextToFile, extractWholeTextFromFile} from './utils';
 import {TypesNamespace} from './types';
 
 import GameState = GameStateNamespace.GameState;
 import LanguagePieceDescription = InterfacesNamespace.LanguagePieceDescription;
 import ProblemInformation = TypesNamespace.ProblemInformation;
+import DayState = TypesNamespace.DayState;
 import allThemes = ThemesNamespace.allThemes;
 import inGameMinutePerRealMsecs = ClockNamespace.inGameMinutePerRealMsecs;
 import inGameDayStartInMinutes = ClockNamespace.inGameDayStartInMinutes;
+import inGameLunchStartInMinutes = ClockNamespace.inGameLunchStartInMinutes;
+import inGameLunchEndInMinutes = ClockNamespace.inGameLunchEndInMinutes;
 
 let globalGameState: GameState | null = null;
 const createNewGameState = (): GameState => {
@@ -22,23 +25,39 @@ const createNewGameState = (): GameState => {
       currentMood: 0,
       currentMotivation: 0,
       currentProblem: null,
+      currentProblemSolution: null,
       currentTheme: null,
       currentClock: {
         realMsecsPassed: 0,
         currentInGameMinutes: 0,
       },
+      currentDayNumber: 0,
+      currentDayState: DayState.Work,
     };
   }
   return globalGameState;
 };
 
 export const saveGameState = () => {
-  // TODO: implement
-  return;
+  if (globalGameState === null) {
+    return;
+  }
+  safeTextToFile('/save.txt', JSON.stringify(globalGameState));
 };
 export const loadGameState = (): GameState => {
+  if (globalGameState !== null) {
+    return globalGameState;
+  }
+  try {
+    const saveAsText = extractWholeTextFromFile('/save.txt');
+    const state = JSON.parse(saveAsText) as GameState;
+    globalGameState = state;
+    console.log(state);
+    return state;
+  } catch {
+    return createNewGameState();
+  }
   // TODO: implement
-  return createNewGameState();
 };
 export const updateGameState = (gameState: GameState) => {
   globalGameState = gameState;
@@ -66,7 +85,7 @@ export const nextTheme = (gameState: GameState) => {
 };
 
 // TODO: add initiateClock
-export const updateClock = (gameState: GameState, passedTimeInMsecs: number) => {
+export const addToClock = (gameState: GameState, passedTimeInMsecs: number) => {
   if (gameState.currentClock === null) {
     throw new Error('trying to update clock without being initialized');
   }
@@ -76,4 +95,10 @@ export const updateClock = (gameState: GameState, passedTimeInMsecs: number) => 
 };
 export const dayStartInMinutes = () => {
   return inGameDayStartInMinutes;
+};
+export const lunchStartInMinutes = () => {
+  return inGameLunchStartInMinutes;
+};
+export const lunchEndInMinutes = () => {
+  return inGameLunchEndInMinutes;
 };
