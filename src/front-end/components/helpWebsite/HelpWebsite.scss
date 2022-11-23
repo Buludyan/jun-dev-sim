@@ -8,6 +8,7 @@
   opacity: 0;
   pointer-events: none;
   z-index: 5;
+  backdrop-filter: blur(8px);
 }
 
 .opened {
@@ -19,6 +20,7 @@
   transition: 0.4s;
   pointer-events: all;
   z-index: 5;
+  backdrop-filter: blur(8px);
 }
 
 .helpWebsite {
@@ -32,8 +34,6 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    border-left: 1px solid black;
-    background-color: #fff;
   }
 
   &__address {

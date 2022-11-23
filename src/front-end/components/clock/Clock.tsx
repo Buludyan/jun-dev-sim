@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import {useActions} from '../../hooks/actions';
 import './Clock.scss';
 import {loadGameState, updateClock, dayStartInMinutes} from '../../../back-end/api';
 
@@ -14,18 +15,8 @@ export const minutesToDegree = (minutes: number): {hour: number; minute: number}
 
 export const Clock = () => {
   const dayStartState = minutesToDegree(dayStartInMinutes());
+  const {setLunchTime} = useActions();
   const [state, setState] = useState<{minute: number; hour: number}>(dayStartState);
-
-  // const setClock = () => {
-  //   // TODO: refine
-  //   // TODO: move to config file
-  //   const oneHourElapseTimeInSeconds = 15;
-  //   const timeCoef = oneHourElapseTimeInSeconds * 100;
-  //   setState({
-  //     minute: (state.minute += 1 / timeCoef),
-  //     hour: (state.hour += 1 / timeCoef / 12),
-  //   });
-  // };
 
   useEffect(() => {
     const clockIntervalDurationInMsecs = 10;
@@ -41,6 +32,13 @@ export const Clock = () => {
         throw new Error('Clock cannot be null here');
       }
       setState(minutesToDegree(clock.currentInGameMinutes));
+      // TODO: fix this
+      if (state.hour > 1.083 && state.hour < 1.084) {
+        setLunchTime(true);
+      }
+      if (state.hour > 1.166 && state.hour < 1.167) {
+        setLunchTime(false);
+      }
     }, clockIntervalDurationInMsecs);
   }, []);
 
