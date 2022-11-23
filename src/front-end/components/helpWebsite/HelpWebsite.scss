@@ -27,7 +27,6 @@
   height: calc(100% - 30px);
   width: 50vw;
 
-
   &__inner {
     height: 100%;
     width: 100%;
@@ -35,7 +34,6 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    border-left: 1px solid black;
   }
 
   &__address {

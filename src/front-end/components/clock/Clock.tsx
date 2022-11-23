@@ -1,8 +1,10 @@
 import React, {useEffect, useState} from 'react';
+import {useActions} from '../../hooks/actions';
 import './Clock.scss';
 
 export const Clock = () => {
-  const [state, setState] = useState<{minute: number; hour: number}>({minute: 1, hour: 0.83});
+  const {setLunchTime} = useActions();
+  const [state, setState] = useState<{minute: number; hour: number}>({minute: 1, hour: 1});
 
   const setClock = () => {
     // TODO: refine
@@ -17,6 +19,12 @@ export const Clock = () => {
 
   useEffect(() => {
     setInterval(() => {
+      if (state.hour > 1.083 && state.hour < 1.084) {
+        setLunchTime(true);
+      }
+      if (state.hour > 1.166 && state.hour < 1.167) {
+        setLunchTime(false);
+      }
       setClock();
     }, 10);
   }, []);

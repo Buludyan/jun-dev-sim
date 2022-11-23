@@ -1,11 +1,13 @@
 import React from 'react';
 import './CharWindow.scss';
-import background from '../../../assets/charachter_work.jpg';
 import {Clock} from '../clock/Clock';
 
 import {nextTheme, loadGameState} from '../../../back-end/api';
+import {useAppSelector} from '../../hooks/storeSelector';
 
 export const CharWindow = () => {
+  const {isLunchTime} = useAppSelector(state => state.timeProcess);
+  const gameState = loadGameState();
   const currentTheme = nextTheme(loadGameState());
 
   return (
@@ -13,7 +15,7 @@ export const CharWindow = () => {
       <div
         className="charWindow__inner"
         style={{
-          backgroundImage: `url(${currentTheme.work})`,
+          backgroundImage: `url(${isLunchTime ? gameState.currentTheme?.lunch : currentTheme.work})`,
           backgroundSize: 'cover',
           backgroundRepeat: 'no-repeat',
           backgroundPosition: 'center',
