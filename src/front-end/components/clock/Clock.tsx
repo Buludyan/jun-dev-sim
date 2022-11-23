@@ -1,30 +1,53 @@
 import React, {useEffect, useState} from 'react';
 import './Clock.scss';
+import {loadGameState, updateClock, dayStartInMinutes} from '../../../back-end/api';
+
+export const minutesToDegree = (minutes: number): {hour: number; minute: number} => {
+  const hours = minutes / 60;
+  const passedMinutesFromHour = minutes - Math.floor(hours) * 60;
+  const toReturn = {
+    hour: hours * 30,
+    minute: minutes * 6,
+  };
+  return toReturn;
+};
 
 export const Clock = () => {
-  const [state, setState] = useState<{minute: number; hour: number}>({minute: 1, hour: 0.83});
+  const dayStartState = minutesToDegree(dayStartInMinutes());
+  const [state, setState] = useState<{minute: number; hour: number}>(dayStartState);
 
-  const setClock = () => {
-    // TODO: refine
-    // TODO: move to config file
-    const oneHourElapseTimeInSeconds = 15;
-    const timeCoef = oneHourElapseTimeInSeconds * 100;
-    setState({
-      minute: (state.minute += 1 / timeCoef),
-      hour: (state.hour += 1 / timeCoef / 12),
-    });
-  };
+  // const setClock = () => {
+  //   // TODO: refine
+  //   // TODO: move to config file
+  //   const oneHourElapseTimeInSeconds = 15;
+  //   const timeCoef = oneHourElapseTimeInSeconds * 100;
+  //   setState({
+  //     minute: (state.minute += 1 / timeCoef),
+  //     hour: (state.hour += 1 / timeCoef / 12),
+  //   });
+  // };
 
   useEffect(() => {
+    const clockIntervalDurationInMsecs = 10;
+    let msecsBegin = Date.now();
     setInterval(() => {
-      setClock();
-    }, 10);
+      const gameState = loadGameState();
+      const msecsEnd = Date.now();
+      const msecsDuration = msecsEnd - msecsBegin;
+      msecsBegin = msecsEnd;
+      updateClock(gameState, msecsDuration);
+      const clock = gameState.currentClock;
+      if (clock === null) {
+        throw new Error('Clock cannot be null here');
+      }
+      setState(minutesToDegree(clock.currentInGameMinutes));
+    }, clockIntervalDurationInMsecs);
   }, []);
 
   return (
     <div className="clock">
-      <div className="hand hour" style={{transform: `translate(-50%) rotate(${state.hour * 360}deg)`}}></div>
-      <div className="hand minute" style={{transform: `translate(-50%) rotate(${state.minute * 360}deg)`}}></div>
+      <div className="hand hour" style={{transform: `translate(-50%) rotate(${state.hour}deg)`}}></div>
+      <div className="hand minute" style={{transform: `translate(-50%) rotate(${state.minute}deg)`}}></div>
 
       <div className="number number1">
         <div>1</div>

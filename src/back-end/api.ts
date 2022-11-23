@@ -1,14 +1,17 @@
-import {GameStateNamespace} from './gameState';
-import {InterfacesNamespace} from './language/interfaces';
-import {TypesNamespace} from './types';
 import {randomProblem as _randomProblem} from './language/api';
+import {InterfacesNamespace} from './language/interfaces';
+import {ThemesNamespace} from './themes/themes';
+import {ClockNamespace} from './clock/clock';
+import {GameStateNamespace} from './gameState';
+import {randomIntFromInterval} from './utils';
+import {TypesNamespace} from './types';
+
 import GameState = GameStateNamespace.GameState;
 import LanguagePieceDescription = InterfacesNamespace.LanguagePieceDescription;
-
 import ProblemInformation = TypesNamespace.ProblemInformation;
-import {ThemesNamespace} from './themes/themes';
 import allThemes = ThemesNamespace.allThemes;
-import {randomIntFromInterval} from './utils';
+import inGameMinutePerRealMsecs = ClockNamespace.inGameMinutePerRealMsecs;
+import inGameDayStartInMinutes = ClockNamespace.inGameDayStartInMinutes;
 
 let globalGameState: GameState | null = null;
 const createNewGameState = (): GameState => {
@@ -20,6 +23,10 @@ const createNewGameState = (): GameState => {
       currentMotivation: 0,
       currentProblem: null,
       currentTheme: null,
+      currentClock: {
+        realMsecsPassed: 0,
+        currentInGameMinutes: 0,
+      },
     };
   }
   return globalGameState;
@@ -56,4 +63,17 @@ export const nextTheme = (gameState: GameState) => {
   currentThemeIndex = randomIntFromInterval(0, allThemesArray.length - 1);
   gameState.currentTheme = allThemesArray[currentThemeIndex];
   return gameState.currentTheme;
+};
+
+// TODO: add initiateClock
+export const updateClock = (gameState: GameState, passedTimeInMsecs: number) => {
+  if (gameState.currentClock === null) {
+    throw new Error('trying to update clock without being initialized');
+  }
+  gameState.currentClock.realMsecsPassed += passedTimeInMsecs;
+  gameState.currentClock.currentInGameMinutes =
+    inGameDayStartInMinutes + gameState.currentClock.realMsecsPassed * inGameMinutePerRealMsecs;
+};
+export const dayStartInMinutes = () => {
+  return inGameDayStartInMinutes;
 };
