@@ -4,7 +4,7 @@ import './Clock.scss';
 
 export const Clock = () => {
   const {setLunchTime} = useActions();
-  const [state, setState] = useState<{minute: number; hour: number}>({minute: 1, hour: 1});
+  const [state, setState] = useState<{minute: number; hour: number}>({minute: 1, hour: 0.83});
 
   const setClock = () => {
     // TODO: refine
