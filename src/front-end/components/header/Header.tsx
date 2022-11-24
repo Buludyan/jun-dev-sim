@@ -5,6 +5,7 @@ import energy from '../../../assets/energy.png';
 import happy from '../../../assets/happy.png';
 import leader from '../../../assets/leader.png';
 import {loadGameState, updateGameState} from '../../../back-end/api';
+import {Clock} from '../clock/Clock';
 
 export const Header = () => {
   const gameState = loadGameState();
@@ -34,11 +35,11 @@ export const Header = () => {
             <img className="header__icon" src={money}></img>
             <div className="header__value">${gameState.currentMoney}</div>
           </div>
-          <div className="header__stat" style={{boxSizing: 'border-box', padding: '0 15px'}}>
+          <div className="header__stat" style={{boxSizing: 'border-box', padding: '0 20px'}}>
             <img className="header__icon" src={happy}></img>
             <div className="header__value">{gameState.currentMood}</div>
           </div>
-          <div className="header__stat" style={{boxSizing: 'border-box', padding: '0 40px'}}>
+          <div className="header__stat" style={{boxSizing: 'border-box', padding: '0 20px'}}>
             <img className="header__icon" src={leader}></img>
             <div className="header__value">{gameState.currentMotivation}</div>
           </div>
@@ -51,6 +52,10 @@ export const Header = () => {
               />
               <div className="header__energy-degree-number">{Math.ceil(gameState.currentEnergy)}</div>
             </div>
+          </div>
+          <div className="header__stat">
+            <Clock />
+            <div className="header__value">09:30</div>
           </div>
         </div>
       </div>
