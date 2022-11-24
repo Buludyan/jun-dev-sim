@@ -31,7 +31,7 @@ export namespace FunctionArgumentNamespace {
       return [
         {
           key: functionArgumentTypeGuard,
-          name: 'Function Argument',
+          name: 'Function argument',
           description: '// TODO',
         },
       ];

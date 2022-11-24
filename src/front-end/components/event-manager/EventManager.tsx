@@ -12,7 +12,7 @@ export const EventManager = () => {
         throw new Error('Clock cannot be null here');
       }
 
-      const Eps = 0.01;
+      const Eps = 1;
       if (Math.abs(clock.currentInGameMinutes - lunchStartInMinutes) < Eps) {
         setLunchInProgress(true);
         setWorkInProgress(false);
@@ -22,6 +22,12 @@ export const EventManager = () => {
         setLunchInProgress(false);
         setWorkInProgress(true);
       }
+
+      // if(lunchStartInMinutes < clock.currentInGameMinutes && clock.currentInGameMinutes < lunchEndInMinutes) {
+      //   setLunchInProgress(true);
+      //   setWorkInProgress(false);
+      //   lunch();
+      // }
     }, 10);
   }, []);
   return <></>;

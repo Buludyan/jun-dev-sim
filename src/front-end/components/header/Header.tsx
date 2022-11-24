@@ -35,10 +35,16 @@ export const Header = () => {
       const inGameMinutesPassed = durationTime * inGameMinutesPerRealMsecs;
       const totalEnergyConsumed = energyConsumptionPerMinute * inGameMinutesPassed;
       gameState.currentMoney = gameState.currentMoney + 1;
-      gameState.currentEnergy <= 0 ? 0 : (gameState.currentEnergy -= totalEnergyConsumed);
+      gameState.currentEnergy <= 0 ? (gameState.currentEnergy = 0) : (gameState.currentEnergy -= totalEnergyConsumed);
     }, 15);
   }, []);
 
+  const currentClock = gameState.currentClock;
+  if (currentClock === null) {
+    throw new Error("Clock can't be null here");
+  }
+  const hours = `${Math.floor(currentClock.currentInGameMinutes / 60)}`.padStart(2, '0');
+  const minutes = `${Math.floor(currentClock.currentInGameMinutes % 60)}`.padStart(2, '0');
   return (
     <div className="header">
       <div className="header__inner">
@@ -73,7 +79,9 @@ export const Header = () => {
           </div>
           <div className="header__stat">
             <Clock />
-            <div className="header__value">09:30</div>
+            <div className="header__value">
+              {hours}:{minutes}
+            </div>
           </div>
         </div>
       </div>
