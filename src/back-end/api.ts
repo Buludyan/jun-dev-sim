@@ -12,15 +12,15 @@ import ProblemInformation = TypesNamespace.ProblemInformation;
 import DayState = TypesNamespace.DayState;
 import allThemes = ThemesNamespace.allThemes;
 import inGameMinutePerRealMsecs = ClockNamespace.inGameMinutePerRealMsecs;
-import inGameDayStartInMinutes = ClockNamespace.inGameDayStartInMinutes;
-import inGameLunchStartInMinutes = ClockNamespace.inGameLunchStartInMinutes;
-import inGameLunchEndInMinutes = ClockNamespace.inGameLunchEndInMinutes;
+export import dayStartInMinutes = ClockNamespace.dayStartInMinutes;
+export import lunchStartInMinutes = ClockNamespace.lunchStartInMinutes;
+export import lunchEndInMinutes = ClockNamespace.lunchEndInMinutes;
 
 let globalGameState: GameState | null = null;
-const createNewGameState = (): GameState => {
+export const createNewGameState = (): GameState => {
   if (globalGameState === null) {
     globalGameState = {
-      currentEnergy: 0,
+      currentEnergy: 100,
       currentMoney: 0,
       currentMood: 0,
       currentMotivation: 0,
@@ -42,7 +42,7 @@ export const saveGameState = () => {
   if (globalGameState === null) {
     return;
   }
-  safeTextToFile('/save.txt', JSON.stringify(globalGameState));
+  safeTextToFile('/save.txt', JSON.stringify(globalGameState, null, 2));
 };
 export const loadGameState = (): GameState => {
   if (globalGameState !== null) {
@@ -91,14 +91,5 @@ export const addToClock = (gameState: GameState, passedTimeInMsecs: number) => {
   }
   gameState.currentClock.realMsecsPassed += passedTimeInMsecs;
   gameState.currentClock.currentInGameMinutes =
-    inGameDayStartInMinutes + gameState.currentClock.realMsecsPassed * inGameMinutePerRealMsecs;
-};
-export const dayStartInMinutes = () => {
-  return inGameDayStartInMinutes;
-};
-export const lunchStartInMinutes = () => {
-  return inGameLunchStartInMinutes;
-};
-export const lunchEndInMinutes = () => {
-  return inGameLunchEndInMinutes;
+    dayStartInMinutes + gameState.currentClock.realMsecsPassed * inGameMinutePerRealMsecs;
 };

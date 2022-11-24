@@ -1,15 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {useActions} from '../../hooks/actions';
 import './Clock.scss';
-import {
-  loadGameState,
-  addToClock,
-  dayStartInMinutes,
-  lunchStartInMinutes,
-  lunchEndInMinutes,
-  saveGameState,
-} from '../../../back-end/api';
-import {stat} from 'fs';
+import {loadGameState, addToClock, saveGameState} from '../../../back-end/api';
 
 export const minutesToDegree = (minutes: number): {hour: number; minute: number} => {
   const hours = minutes / 60;
@@ -52,12 +44,12 @@ export const Clock = () => {
 
         // TODO: move this to global space
         // const Eps = 0.001;
-        // if (Math.abs(clock.currentInGameMinutes - lunchStartInMinutes()) < Eps) {
+        // if (Math.abs(clock.currentInGameMinutes - lunchStartInMinutes) < Eps) {
         //   setLunchInProgress(true);
         //   setWorkInProgress(false);
         // }
 
-        // if (Math.abs(clock.currentInGameMinutes - lunchEndInMinutes()) < Eps) {
+        // if (Math.abs(clock.currentInGameMinutes - lunchEndInMinutes) < Eps) {
         //   setLunchTime(false);
         // }
       }, clockIntervalDurationInMsecs);

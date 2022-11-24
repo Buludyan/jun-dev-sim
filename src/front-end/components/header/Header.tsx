@@ -7,23 +7,22 @@ import leader from '../../../assets/leader.png';
 import {loadGameState, updateGameState} from '../../../back-end/api';
 
 export const Header = () => {
-  const energyBarLength = 56;
-  const [state, setState] = useState<{length: number; color: number}>({length: energyBarLength, color: 100});
+  const gameState = loadGameState();
+  const energyBarLength = (56 * gameState.currentEnergy) / 100;
+  const [state, setState] = useState<{length: number}>({length: energyBarLength});
 
   const setParameters = () => {
     setState({
       length: (state.length -= energyBarLength / 100 / 100),
-      color: state.color <= 0 ? 0 : (state.color -= 0.01),
     });
   };
-
-  const gameState = loadGameState();
 
   useEffect(() => {
     setInterval(() => {
       setParameters();
       // TODO: Question to Arman, is this OK?
       gameState.currentMoney = gameState.currentMoney + 1;
+      gameState.currentEnergy <= 0 ? 0 : (gameState.currentEnergy -= 0.01);
     }, 15);
   }, []);
 
@@ -48,9 +47,9 @@ export const Header = () => {
             <div className="header__energy-value">
               <div
                 className="header__energy-degree"
-                style={{width: `${state.length}px`, backgroundColor: `hsl(${state.color}, 100%, 50%)`}}
+                style={{width: `${state.length}px`, backgroundColor: `hsl(${gameState.currentEnergy}, 100%, 50%)`}}
               />
-              <div className="header__energy-degree-number">{Math.ceil(state.color)}</div>
+              <div className="header__energy-degree-number">{Math.ceil(gameState.currentEnergy)}</div>
             </div>
           </div>
         </div>
