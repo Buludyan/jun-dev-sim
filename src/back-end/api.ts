@@ -5,6 +5,7 @@ import {ClockNamespace} from './clock/clock';
 import {GameStateNamespace} from './gameState';
 import {randomIntFromInterval, safeTextToFile, extractWholeTextFromFile} from './utils';
 import {TypesNamespace} from './types';
+import {ConstantsNamespace} from './constants/constants';
 
 import GameState = GameStateNamespace.GameState;
 import GameStateVersion = GameStateNamespace.GameStateVersion;
@@ -12,10 +13,11 @@ import LanguagePieceDescription = InterfacesNamespace.LanguagePieceDescription;
 import ProblemInformation = TypesNamespace.ProblemInformation;
 import DayState = TypesNamespace.DayState;
 import allThemes = ThemesNamespace.allThemes;
-import inGameMinutePerRealMsecs = ClockNamespace.inGameMinutePerRealMsecs;
-export import dayStartInMinutes = ClockNamespace.dayStartInMinutes;
-export import lunchStartInMinutes = ClockNamespace.lunchStartInMinutes;
-export import lunchEndInMinutes = ClockNamespace.lunchEndInMinutes;
+export import inGameMinutesPerRealMsecs = ConstantsNamespace.inGameMinutesPerRealMsecs;
+export import dayStartInMinutes = ConstantsNamespace.dayStartInMinutes;
+export import lunchStartInMinutes = ConstantsNamespace.lunchStartInMinutes;
+export import lunchEndInMinutes = ConstantsNamespace.lunchEndInMinutes;
+export import energyConsumptionPerMinute = ConstantsNamespace.energyConsumptionPerMinute;
 
 let globalGameState: GameState | null = null;
 export const createNewGameState = (): GameState => {
@@ -36,6 +38,20 @@ export const createNewGameState = (): GameState => {
       currentDayNumber: 0,
       currentDayState: DayState.Work,
     };
+  } else {
+    globalGameState.currentEnergy = 100;
+    globalGameState.currentMoney = 0;
+    globalGameState.currentMood = 0;
+    globalGameState.currentMotivation = 0;
+    globalGameState.currentProblem = null;
+    globalGameState.currentProblemSolution = null;
+    globalGameState.currentTheme = null;
+    globalGameState.currentClock = {
+      realMsecsPassed: 0,
+      currentInGameMinutes: 0,
+    };
+    globalGameState.currentDayNumber = 0;
+    globalGameState.currentDayState = DayState.Work;
   }
   return globalGameState;
 };
@@ -94,7 +110,7 @@ export const addToClock = (gameState: GameState, passedTimeInMsecs: number) => {
   }
   gameState.currentClock.realMsecsPassed += passedTimeInMsecs;
   gameState.currentClock.currentInGameMinutes =
-    dayStartInMinutes + gameState.currentClock.realMsecsPassed * inGameMinutePerRealMsecs;
+    dayStartInMinutes + gameState.currentClock.realMsecsPassed * inGameMinutesPerRealMsecs;
 };
 
 // TODO: move to some utils file

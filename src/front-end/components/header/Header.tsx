@@ -5,7 +5,12 @@ import energy from '../../../assets/energy.png';
 import happy from '../../../assets/happy.png';
 import leader from '../../../assets/leader.png';
 import calendar from '../../../assets/calendar.png';
-import {loadGameState, weekDayNames} from '../../../back-end/api';
+import {
+  loadGameState,
+  weekDayNames,
+  inGameMinutesPerRealMsecs,
+  energyConsumptionPerMinute,
+} from '../../../back-end/api';
 
 export const Header = () => {
   const gameState = loadGameState();
@@ -14,16 +19,22 @@ export const Header = () => {
 
   const setParameters = () => {
     setState({
-      length: (state.length -= energyBarLength / 100 / 100),
+      length: (56 * gameState.currentEnergy) / 100,
     });
   };
 
   useEffect(() => {
+    let beginTime = Date.now();
     setInterval(() => {
       setParameters();
-      // TODO: Question to Arman, is this OK?
+      const endTime = Date.now();
+      const durationTime = endTime - beginTime;
+      beginTime = endTime;
+
+      const inGameMinutesPassed = durationTime * inGameMinutesPerRealMsecs;
+      const totalEnergyConsumed = energyConsumptionPerMinute * inGameMinutesPassed;
       gameState.currentMoney = gameState.currentMoney + 1;
-      gameState.currentEnergy <= 0 ? 0 : (gameState.currentEnergy -= 0.01);
+      gameState.currentEnergy <= 0 ? 0 : (gameState.currentEnergy -= totalEnergyConsumed);
     }, 15);
   }, []);
 
