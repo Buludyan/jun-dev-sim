@@ -1,11 +1,11 @@
 import {bindActionCreators} from '@reduxjs/toolkit';
 import {useDispatch} from 'react-redux';
 import {helpWebsiteActions} from '../slices/helpWebsiteSlice';
-import {timeProcessActions} from '../slices/timeProcessSlice';
+import {eventsActions} from '../slices/eventsSlice';
 
 const actions = {
   ...helpWebsiteActions,
-  ...timeProcessActions,
+  ...eventsActions,
 };
 
 export const useActions = () => {

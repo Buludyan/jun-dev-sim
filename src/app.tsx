@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import {Provider} from 'react-redux';
 import './app.scss';
+import {EventManager} from './front-end/components/event-manager/EventManager';
 import {Header} from './front-end/components/header/Header';
 import {LeftHalf} from './front-end/pages/left-half/LeftHalf';
 import {RightHalf} from './front-end/pages/right-half/RightHalf';
@@ -13,6 +14,7 @@ const App = () => {
       <div className="app">
         <Header />
         <div className="app__inner">
+          {/* <EventManager /> */}
           <LeftHalf />
           <RightHalf />
         </div>

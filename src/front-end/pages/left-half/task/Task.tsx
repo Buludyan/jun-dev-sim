@@ -1,4 +1,5 @@
 import React, {useCallback, useEffect, useState, FC} from 'react';
+import {createNewGameState} from '../../../../back-end/api';
 import {useActions} from '../../../hooks/actions';
 import './Task.scss';
 
@@ -69,6 +70,9 @@ export const Task: FC<ITask> = ({description, code}) => {
         <div className="task__cl-btns">
           <button className="task__cl-btn" onClick={() => setActive()}>
             ?
+          </button>
+          <button className="task__cl-btn" onClick={createNewGameState}>
+            R
           </button>
         </div>
       </div>

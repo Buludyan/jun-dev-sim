@@ -61,6 +61,7 @@
 .header__icon {
   width: 25px;
   height: 25px;
+  pointer-events: none;
 }
 
 .header__energy-value {
@@ -75,17 +76,23 @@
           justify-content: flex-start;
   height: 20px;
   width: 70px;
-  border: 2px solid #3D9414;
+  border: 2px solid #3d9414;
   border-radius: 5px;
   margin-left: 5px;
   padding: 0;
 }
 
 .header__energy-degree {
-  -webkit-transition: all 2s;
-  transition: all 2s;
   margin: 0;
-  height: 105%;
+  height: 21px;
   border-radius: 3px;
+  position: absolute;
+}
+
+.header__energy-degree-number {
+  color: white;
+  position: relative;
+  width: 20px;
+  left: calc(50% - 7px);
 }
 /*# sourceMappingURL=Header.css.map */

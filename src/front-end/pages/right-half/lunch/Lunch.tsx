@@ -1,23 +1,19 @@
 import React from 'react';
-import './Work.scss';
+import './Lunch.scss';
+import {loadGameState, nextTheme} from '../../../../back-end/api';
 
-import {nextTheme, loadGameState} from '../../../../back-end/api';
-import {Clock} from '../../../components/clock/Clock';
-
-export const Work = () => {
+export const Lunch = () => {
   // TODO: remove nextTheme function from here, and move it to the start of day function
   const currentTheme = nextTheme(loadGameState());
   return (
     <div
-      className="work"
+      className="lunch"
       style={{
-        backgroundImage: `url(${currentTheme.work})`,
+        backgroundImage: `url(${currentTheme.lunch})`,
         backgroundSize: 'cover',
         backgroundRepeat: 'no-repeat',
         backgroundPosition: 'center',
       }}
-    >
-      <Clock />
-    </div>
+    ></div>
   );
 };
