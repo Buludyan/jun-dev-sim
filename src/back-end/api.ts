@@ -7,6 +7,7 @@ import {randomIntFromInterval, safeTextToFile, extractWholeTextFromFile} from '.
 import {TypesNamespace} from './types';
 
 import GameState = GameStateNamespace.GameState;
+import GameStateVersion = GameStateNamespace.GameStateVersion;
 import LanguagePieceDescription = InterfacesNamespace.LanguagePieceDescription;
 import ProblemInformation = TypesNamespace.ProblemInformation;
 import DayState = TypesNamespace.DayState;
@@ -20,6 +21,7 @@ let globalGameState: GameState | null = null;
 export const createNewGameState = (): GameState => {
   if (globalGameState === null) {
     globalGameState = {
+      stateVersion: GameStateVersion.V1,
       currentEnergy: 100,
       currentMoney: 0,
       currentMood: 0,
@@ -50,6 +52,7 @@ export const loadGameState = (): GameState => {
   }
   try {
     const saveAsText = extractWholeTextFromFile('/save.txt');
+    // TODO: handle another versions here
     const state = JSON.parse(saveAsText) as GameState;
     globalGameState = state;
     console.log(state);
@@ -92,4 +95,9 @@ export const addToClock = (gameState: GameState, passedTimeInMsecs: number) => {
   gameState.currentClock.realMsecsPassed += passedTimeInMsecs;
   gameState.currentClock.currentInGameMinutes =
     dayStartInMinutes + gameState.currentClock.realMsecsPassed * inGameMinutePerRealMsecs;
+};
+
+// TODO: move to some utils file
+export const weekDayNames = (dayNumber: number) => {
+  return ['Mon.', 'Tue.', 'Wed.', 'Thu.', 'Fri.', 'Sat.', 'Sun.'][dayNumber % 7];
 };

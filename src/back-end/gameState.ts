@@ -9,7 +9,11 @@ import Theme = ThemesNamespace.Theme;
 import Clock = ClockNamespace.Clock;
 
 export namespace GameStateNamespace {
+  export enum GameStateVersion {
+    V1 = 'V1',
+  }
   export type GameState = {
+    stateVersion: GameStateVersion;
     currentProblem: ProblemInformation | null;
     currentProblemSolution: string | null;
     currentTheme: Theme | null;

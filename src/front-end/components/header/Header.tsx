@@ -4,8 +4,9 @@ import money from '../../../assets/money.png';
 import energy from '../../../assets/energy.png';
 import happy from '../../../assets/happy.png';
 import leader from '../../../assets/leader.png';
-import {loadGameState, updateGameState} from '../../../back-end/api';
 import {Clock} from '../clock/Clock';
+import calendar from '../../../assets/calendar.png';
+import {loadGameState, weekDayNames, updateGameState} from '../../../back-end/api';
 
 export const Header = () => {
   const gameState = loadGameState();
@@ -31,6 +32,12 @@ export const Header = () => {
     <div className="header">
       <div className="header__inner">
         <div className="header__stats">
+          <div className="header__stat">
+            <img className="header__icon" src={calendar}></img>
+            <div className="header__value">
+              Day {gameState.currentDayNumber + 1}, {weekDayNames(gameState.currentDayNumber)}
+            </div>
+          </div>
           <div className="header__stat">
             <img className="header__icon" src={money}></img>
             <div className="header__value">${gameState.currentMoney}</div>
