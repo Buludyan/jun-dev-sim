@@ -3,7 +3,8 @@ import ReactDOM from 'react-dom/client';
 import {Provider} from 'react-redux';
 import './app.scss';
 import {Header} from './front-end/components/header/Header';
-import {WorkProcess} from './front-end/pages/work-process/WorkProcess';
+import {LeftHalf} from './front-end/pages/left-half/LeftHalf';
+import {RightHalf} from './front-end/pages/right-half/RightHalf';
 import {store} from './front-end/store/Store';
 
 const App = () => {
@@ -12,7 +13,8 @@ const App = () => {
       <div className="app">
         <Header />
         <div className="app__inner">
-          <WorkProcess />
+          <LeftHalf />
+          <RightHalf />
         </div>
       </div>
     </Provider>

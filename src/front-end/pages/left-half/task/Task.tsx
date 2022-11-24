@@ -1,13 +1,13 @@
 import React, {useCallback, useEffect, useState, FC} from 'react';
-import {useActions} from '../../hooks/actions';
-import './TaskWindow.scss';
+import {useActions} from '../../../hooks/actions';
+import './Task.scss';
 
-interface ITaskWindow {
+interface ITask {
   description: string;
   code: string;
 }
 
-export const TaskWindow: FC<ITaskWindow> = ({description, code}) => {
+export const Task: FC<ITask> = ({description, code}) => {
   const [solution, setSolution] = useState('');
   const {setActive} = useActions();
 
@@ -52,26 +52,24 @@ export const TaskWindow: FC<ITaskWindow> = ({description, code}) => {
   }, [onEnterHandler]);
 
   return (
-    <div className="taskWindow">
-      <div className="taskWindow__inner">
-        <div className="taskWindow__console">
-          {/*<p>{JSON.stringify(problem)}</p>*/}
-          <p className="taskWindow__problem">{description}</p>
-          <p className="taskWindow__problem">{code}</p>
-        </div>
-        <div className="taskWindow__cl">
-          <textarea
-            value={solution}
-            cols={40}
-            rows={8}
-            className="taskWindow__cl-text"
-            onChange={e => setSolution(e.target.value)}
-          ></textarea>
-          <div className="taskWindow__cl-btns">
-            <button className="taskWindow__cl-btn" onClick={() => setActive()}>
-              ?
-            </button>
-          </div>
+    <div className="task">
+      <div className="task__console">
+        {/*<p>{JSON.stringify(problem)}</p>*/}
+        <p className="task__problem">{description}</p>
+        <p className="task__problem">{code}</p>
+      </div>
+      <div className="task__cl">
+        <textarea
+          value={solution}
+          cols={40}
+          rows={8}
+          className="task__cl-text"
+          onChange={e => setSolution(e.target.value)}
+        ></textarea>
+        <div className="task__cl-btns">
+          <button className="task__cl-btn" onClick={() => setActive()}>
+            ?
+          </button>
         </div>
       </div>
     </div>

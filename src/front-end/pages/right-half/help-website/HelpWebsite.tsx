@@ -1,9 +1,8 @@
 import React, {FC, useState} from 'react';
 import './HelpWebsite.scss';
-import queue from '../../../assets/queue.png';
-import {useAppSelector} from '../../hooks/storeSelector';
-import {IUsedPiecesDescriptions} from '../../interfaces/interfaces';
-import {changeFromNameToEndpoint} from '../../helpers/helpers';
+import {useAppSelector} from '../../../hooks/storeSelector';
+import {IUsedPiecesDescriptions} from '../../../interfaces/interfaces';
+import {changeFromNameToEndpoint} from '../../../helpers/helpers';
 
 interface IHelpWebsite {
   pieces: IUsedPiecesDescriptions[];
