@@ -14,7 +14,7 @@ const App = () => {
       <div className="app">
         <Header />
         <div className="app__inner">
-          {/* <EventManager /> */}
+          <EventManager />
           <LeftHalf />
           <RightHalf />
         </div>
