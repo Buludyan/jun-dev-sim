@@ -20,7 +20,7 @@ export const Header = () => {
 
   const setParameters = () => {
     setState({
-      length: (56 * gameState.currentEnergy) / 100,
+      length: (70 * gameState.currentEnergy) / 100,
     });
   };
 

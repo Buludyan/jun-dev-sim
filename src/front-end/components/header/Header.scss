@@ -13,13 +13,11 @@
   }
 
   &__stats {
-    width: 500px;
+    width: 840px;
     height: 90%;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
     align-items: center;
-    border: 2px solid #3d9414;
     border-radius: 5px;
   }
 
@@ -31,8 +29,7 @@
     height: 100%;
     width: 120px;
     color: white;
-    border: 2px solid #3d9414;
-    border-radius: 5px;
+    border-right: 2px solid grey;
   }
 
   &__icon {
