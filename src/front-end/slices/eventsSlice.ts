@@ -1,24 +1,19 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 
-interface Initial {
-  isWorkInProgress: boolean;
-  isLunchInProgress: boolean;
+interface GameSceneState {
+  eventsCount: number;
 }
 
-const initialState: Initial = {
-  isWorkInProgress: true,
-  isLunchInProgress: false,
+const initialState: GameSceneState = {
+  eventsCount: 0,
 };
 
 export const eventsSlice = createSlice({
   name: 'events',
   initialState,
   reducers: {
-    setWorkInProgress: (state, action: PayloadAction<boolean>) => {
-      state.isWorkInProgress = action.payload;
-    },
-    setLunchInProgress: (state, action: PayloadAction<boolean>) => {
-      state.isLunchInProgress = action.payload;
+    incrementEventsCount: state => {
+      ++state.eventsCount;
     },
   },
 });

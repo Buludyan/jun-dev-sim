@@ -15,6 +15,7 @@ import DayState = TypesNamespace.DayState;
 import allThemes = ThemesNamespace.allThemes;
 export import inGameMinutesPerRealMsecs = ConstantsNamespace.inGameMinutesPerRealMsecs;
 export import dayStartInMinutes = ConstantsNamespace.dayStartInMinutes;
+export import dayEndInMinutes = ConstantsNamespace.dayEndInMinutes;
 export import lunchStartInMinutes = ConstantsNamespace.lunchStartInMinutes;
 export import lunchEndInMinutes = ConstantsNamespace.lunchEndInMinutes;
 export import energyConsumptionPerMinute = ConstantsNamespace.energyConsumptionPerMinute;
@@ -36,7 +37,7 @@ export const createNewGameState = (): GameState => {
         currentInGameMinutes: 0,
       },
       currentDayNumber: 0,
-      currentDayState: DayState.Work,
+      currentDayState: DayState.None,
     };
   } else {
     globalGameState.currentEnergy = 100;
@@ -51,8 +52,9 @@ export const createNewGameState = (): GameState => {
       currentInGameMinutes: 0,
     };
     globalGameState.currentDayNumber = 0;
-    globalGameState.currentDayState = DayState.Work;
+    globalGameState.currentDayState = DayState.None;
   }
+  console.error(globalGameState);
   return globalGameState;
 };
 
@@ -102,8 +104,13 @@ export const nextTheme = (gameState: GameState) => {
   gameState.currentTheme = allThemesArray[currentThemeIndex];
   return gameState.currentTheme;
 };
+export const initiateClock = (gameState: GameState) => {
+  gameState.currentClock = {
+    realMsecsPassed: 0,
+    currentInGameMinutes: 0,
+  };
+};
 
-// TODO: add initiateClock
 export const addToClock = (gameState: GameState, passedTimeInMsecs: number) => {
   if (gameState.currentClock === null) {
     throw new Error('trying to update clock without being initialized');

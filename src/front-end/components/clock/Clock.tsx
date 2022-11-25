@@ -24,8 +24,11 @@ export const Clock = () => {
   useEffect(() => {
     const clockIntervalDurationInMsecs = 10;
     let msecsBegin = Date.now();
-    setInterval(() => {
+    const interval = setInterval(() => {
       const gameState = loadGameState();
+      if (gameState.currentClock === null) {
+        return;
+      }
       const msecsEnd = Date.now();
       const msecsDuration = msecsEnd - msecsBegin;
       msecsBegin = msecsEnd;
@@ -37,6 +40,8 @@ export const Clock = () => {
       saveGameState();
       setState(minutesToDegree(clock.currentInGameMinutes));
     }, clockIntervalDurationInMsecs);
+
+    return () => clearInterval(interval);
   }, []);
 
   return (

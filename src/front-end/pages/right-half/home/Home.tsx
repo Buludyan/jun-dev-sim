@@ -1,17 +1,17 @@
 import React from 'react';
-import './Lunch.scss';
+import './Home.scss';
 import {loadGameState} from '../../../../back-end/api';
 
-export const Lunch = () => {
+export const Home = () => {
   const currentTheme = loadGameState().currentTheme;
   if (currentTheme === null) {
     throw new Error('Theme cannot be null here');
   }
   return (
     <div
-      className="lunch"
+      className="home"
       style={{
-        backgroundImage: `url(${currentTheme.lunch})`,
+        backgroundImage: `url(${currentTheme.home})`,
         backgroundSize: 'cover',
         backgroundRepeat: 'no-repeat',
         backgroundPosition: 'center',

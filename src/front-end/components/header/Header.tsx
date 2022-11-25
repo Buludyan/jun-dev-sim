@@ -40,11 +40,12 @@ export const Header = () => {
   }, []);
 
   const currentClock = gameState.currentClock;
-  if (currentClock === null) {
-    throw new Error("Clock can't be null here");
+  let clockStr = '';
+  if (currentClock !== null) {
+    const hours = `${Math.floor(currentClock.currentInGameMinutes / 60)}`.padStart(2, '0');
+    const minutes = `${Math.floor(currentClock.currentInGameMinutes % 60)}`.padStart(2, '0');
+    clockStr = `${hours}:${minutes}`;
   }
-  const hours = `${Math.floor(currentClock.currentInGameMinutes / 60)}`.padStart(2, '0');
-  const minutes = `${Math.floor(currentClock.currentInGameMinutes % 60)}`.padStart(2, '0');
   return (
     <div className="header">
       <div className="header__inner">
@@ -77,12 +78,12 @@ export const Header = () => {
               <div className="header__energy-degree-number">{Math.ceil(gameState.currentEnergy)}</div>
             </div>
           </div>
-          <div className="header__stat">
-            <Clock />
-            <div className="header__value">
-              {hours}:{minutes}
+          {currentClock && (
+            <div className="header__stat">
+              <Clock />
+              <div className="header__value">{clockStr}</div>
             </div>
-          </div>
+          )}
         </div>
       </div>
     </div>
