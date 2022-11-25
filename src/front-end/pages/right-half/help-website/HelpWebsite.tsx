@@ -3,6 +3,7 @@ import './HelpWebsite.scss';
 import {useAppSelector} from '../../../hooks/storeSelector';
 import {IUsedPiecesDescriptions} from '../../../interfaces/interfaces';
 import {changeFromNameToEndpoint} from '../../../helpers/helpers';
+import queue from '../../../../assets/queue.png';
 
 interface IHelpWebsite {
   pieces: IUsedPiecesDescriptions[];
@@ -31,35 +32,45 @@ export const HelpWebsite: FC<IHelpWebsite> = ({pieces}) => {
     <div className={isActive ? 'opened' : 'closed'}>
       <div className="helpWebsite">
         <div className="helpWebsite__inner">
-          <div className="helpWebsite__address">{address}</div>
-          {data ? (
-            <div className="helpWebsite__descriptionBlock">
-              <button onClick={onCloseHandler}>Go back</button>
-              <div>{data.name}</div>
-              <div>{data.description}</div>
-            </div>
-          ) : (
-            <div className="helpWebsite__piecesBlock">
-              <div className="helpWebsite__piecesList">
-                {pieces.slice(0, Math.floor(pieces.length / 2)).map((piece, idx) => {
-                  return (
-                    <div className="helpWebsite__piece" key={idx} onClick={() => onPieceClickHandler(piece.name)}>
-                      {piece.name}
-                    </div>
-                  );
-                })}
-              </div>
-              <div className="helpWebsite__piecesList">
-                {pieces.slice(Math.floor(pieces.length / 2), pieces.length).map((piece, idx) => {
-                  return (
-                    <div className="helpWebsite__piece" key={idx} onClick={() => onPieceClickHandler(piece.name)}>
-                      {piece.name}
-                    </div>
-                  );
-                })}
+          <div className="helpWebsite__page">
+            <div className="helpWebsite__head">
+              <div className="helpWebsite__tab">
+                <img className="helpWebsite__logo" src={queue}></img>
+                <p>Queue flow</p>
               </div>
             </div>
-          )}
+            <div className="helpWebsite__address">
+              <div className="helpWebsite__address-input">{address}</div>
+            </div>
+            {data ? (
+              <div className="helpWebsite__descriptionBlock">
+                <button onClick={onCloseHandler}>Go back</button>
+                <div>{data.name}</div>
+                <div>{data.description}</div>
+              </div>
+            ) : (
+              <div className="helpWebsite__piecesBlock">
+                <div className="helpWebsite__piecesList">
+                  {pieces.slice(0, Math.floor(pieces.length / 2)).map((piece, idx) => {
+                    return (
+                      <div className="helpWebsite__piece" key={idx} onClick={() => onPieceClickHandler(piece.name)}>
+                        {piece.name}
+                      </div>
+                    );
+                  })}
+                </div>
+                <div className="helpWebsite__piecesList">
+                  {pieces.slice(Math.floor(pieces.length / 2), pieces.length).map((piece, idx) => {
+                    return (
+                      <div className="helpWebsite__piece" key={idx} onClick={() => onPieceClickHandler(piece.name)}>
+                        {piece.name}
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>
