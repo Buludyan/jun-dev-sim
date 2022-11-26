@@ -34,7 +34,7 @@ export const EventManager = () => {
     setInterval(() => {
       const gameState = loadGameState();
       const clock = gameState.currentClock;
-      console.log(`gameState=${JSON.stringify(gameState)}`);
+      // console.log(`gameState=${JSON.stringify(gameState)}`);
       const currentGameScene: {
         home: boolean;
         lunch: boolean;

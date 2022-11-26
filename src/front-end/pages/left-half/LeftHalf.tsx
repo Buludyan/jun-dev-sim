@@ -5,7 +5,7 @@ import {Task} from './task/Task';
 
 export const LeftHalf = () => {
   const state = loadGameState();
-  const problem = state.currentProblem ?? randomProblem(state, 10);
+  const problem = state.currentProblem ?? randomProblem(state, 2);
 
   const description: string = problem.description;
   const code: string = problem.code;

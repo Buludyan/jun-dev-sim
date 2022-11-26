@@ -12,36 +12,78 @@ export const Task: FC<ITask> = ({description, code}) => {
   const [solution, setSolution] = useState('');
   const {setActive} = useActions();
 
-  const onEnterHandler = useCallback(() => {
-    console.log(code.split('\n'), solution.split('\n'));
-    const processedCode = code.split('\n');
-    const processedSolution = removeSpaces(solution.split('\n'));
+  //TODO: fix additional enters in code from back;
+  const interpreter = useCallback(() => {
+    const dividedCode = code.split('\n');
+    const dividedSolution = solution.split('\n').filter(row => row.length !== 0);
 
-    for (let i = 0; i < processedCode.length; ++i) {
-      if (processedCode[i] !== processedSolution[i]) {
-        console.log('Wrong solution!');
-        return;
+    if (!dividedSolution.length) {
+      return;
+    }
+
+    console.log(dividedCode, dividedSolution);
+
+    if (dividedCode.length !== dividedSolution.length) {
+      console.log('wrong length');
+      return false;
+    }
+
+    const codeParts = [];
+    const solutionParts = [];
+
+    for (let i = 0; i < dividedCode.length; ++i) {
+      codeParts.push(splitter(code[i]));
+
+      solutionParts.push(splitter(dividedSolution[i]));
+    }
+
+    for (let i = 0; i < codeParts.length; ++i) {
+      for (let j = 0; j < codeParts[i].length; ++j) {
+        if (codeParts[i][j] !== solutionParts[i][j]) {
+          console.log('wrong answer');
+          return false;
+        }
       }
     }
 
-    console.log('Correct solution!');
-  }, [solution]);
+    console.log('right');
+    return true;
+  }, [solution, code]);
 
-  const removeSpaces = (array: string[]) => {
-    const processedArray = array.map(str =>
-      str
-        .split(' ')
-        .filter(str => str !== '')
-        .join(' ')
-    );
-    return processedArray;
+  const splitter = (codeRow: string) => {
+    let curStr = '';
+    const result = [];
+    for (let i = 0; i < codeRow.length; ++i) {
+      if (codeRow[i] === ' ') {
+        if (curStr.length) {
+          result.push(curStr);
+          curStr = '';
+        }
+        continue;
+      }
+      if (/^[A-Za-z0-9]*$/.test(codeRow[i])) {
+        curStr += codeRow[i];
+      } else {
+        if (curStr.length) {
+          result.push(curStr);
+          curStr = '';
+        }
+        result.push(codeRow[i]);
+      }
+    }
+
+    if (curStr.length) {
+      result.push(curStr);
+    }
+
+    return result;
   };
 
   useEffect(() => {
     const keyDownHandler = (event: KeyboardEvent) => {
-      if (event.key === 'Enter' && !event.shiftKey) {
+      if (event.key === 'Enter' && event.shiftKey) {
         event.preventDefault();
-        onEnterHandler();
+        interpreter();
       }
     };
 
@@ -50,7 +92,7 @@ export const Task: FC<ITask> = ({description, code}) => {
     return () => {
       document.removeEventListener('keydown', keyDownHandler);
     };
-  }, [onEnterHandler]);
+  }, [interpreter]);
 
   return (
     <div className="task">
